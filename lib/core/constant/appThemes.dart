@@ -12,6 +12,8 @@ class AppTheme {
     fontFamily: kAppFont, iconTheme: IconThemeData(color: Colors.white),
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
+    // dividerTheme: DividerThemeData(space: 0),
+
     appBarTheme: AppBarTheme(
       elevation: 0,
       color: Colors.transparent,

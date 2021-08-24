@@ -67,6 +67,10 @@ class AppLogo extends StatelessWidget {
               sigmaX: 7.0, sigmaY: 7.0, tileMode: TileMode.mirror),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
+            // child: buildSvgImage(
+            //     image: 'assets/images/onBoarding/logo.svg',
+            //     height: height as double,
+            //     width: width as double),
             child: Container(
               height: getWidth(height as double),
               width: getWidth(width as double),
@@ -88,6 +92,7 @@ Widget buildSvgImage(
     {required String image,
     required double height,
     required double width,
+    Color? color,
     Function()? onTap}) {
   return IconButton(
     onPressed: onTap,
@@ -98,6 +103,7 @@ Widget buildSvgImage(
       width: getWidth(width),
       child: SvgPicture.asset(
         image,
+        color: color,
         fit: BoxFit.fill,
       ),
     ),

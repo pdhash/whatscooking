@@ -11,6 +11,7 @@ class CustomButton extends StatefulWidget {
   final double fontSize;
   final double? radius;
   final Color color;
+  final Widget? widget;
 
   CustomButton({
     required this.text,
@@ -21,6 +22,7 @@ class CustomButton extends StatefulWidget {
     this.height = 50,
     this.fontSize = 16,
     this.color = AppColor.kPrimaryColor,
+    this.widget,
   });
 
   @override
@@ -43,11 +45,13 @@ class _CustomButtonState extends State<CustomButton> {
           color: widget.color,
         ),
         alignment: Alignment.center,
-        child: Center(
-            child: Text(widget.text,
-                style: TextStyle(
-                    fontSize: getWidth(widget.fontSize),
-                    fontWeight: FontWeight.w600))),
+        child: widget.widget == null
+            ? Center(
+                child: Text(widget.text,
+                    style: TextStyle(
+                        fontSize: getWidth(widget.fontSize),
+                        fontWeight: FontWeight.w600)))
+            : widget.widget,
       ),
       // ),
     );

@@ -31,6 +31,7 @@ dependencies:
   get: ^4.3.8
   flutter_svg: ^0.22.0
   flutter_fortune_wheel: ^1.1.0
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,9 @@ flutter:
     - assets/images/onBoarding/
     - assets/icons/appbar/
     - assets/icons/navigatorbar/
+    - assets/icons/home/
+    - assets/icons/shoppingList/
+    - assets/icons/dishdetails/
     - assets/static/
 
 

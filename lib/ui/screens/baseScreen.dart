@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/viewmodels/controllers/basescreenContoller.dart';
 import 'package:whatscooking/ui/screens/recommendations/recommendation.dart';
+import 'package:whatscooking/ui/screens/shoppingList/shoppingList.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
+import 'calendar/calendar.dart';
+import 'home/home.dart';
+import 'menu/menu.dart';
+
 class BaseScreen extends StatelessWidget {
-  final List<Widget> screens = [Recommendations()];
+  final List<Widget> screens = [
+    Home(),
+    ShoppingList(),
+    Recommendations(),
+    Calendar(),
+    Menu()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +29,11 @@ class BaseScreen extends StatelessWidget {
         appBarLeadingButtonType: AppBarLeadingButtonType.menu,
         color: Colors.transparent,
       ),
-      body: IndexedStack(
-        children: screens,
+      body: GetBuilder(
+        builder: (BaseScreenController controller) => IndexedStack(
+          index: controller.selectedIndex,
+          children: screens,
+        ),
       ),
       bottomNavigationBar: BottomBar(),
     );
@@ -81,6 +96,9 @@ class _BottomBarState extends State<BottomBar> {
                           image: list[index]['image'],
                           height: list[index]['height'],
                           width: list[index]['width'],
+                          color: controller.selectedIndex == index
+                              ? AppColor.kPrimaryColor
+                              : null,
                           onTap: () {
                             controller.selectedIndex = index;
                             print(controller.selectedIndex);
