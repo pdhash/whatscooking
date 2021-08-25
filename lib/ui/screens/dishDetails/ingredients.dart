@@ -11,9 +11,15 @@ import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
-class Ingredients extends StatelessWidget {
+class Ingredients extends StatefulWidget {
+  @override
+  _IngredientsState createState() => _IngredientsState();
+}
+
+class _IngredientsState extends State<Ingredients> {
   final DishDetailController dishDetailController =
       Get.put(DishDetailController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,10 +70,39 @@ class Ingredients extends StatelessWidget {
   }
 }
 
-class OpenBottomSheet extends StatelessWidget {
+class OpenBottomSheet extends StatefulWidget {
+  @override
+  _OpenBottomSheetState createState() => _OpenBottomSheetState();
+}
+
+class _OpenBottomSheetState extends State<OpenBottomSheet> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(0,
+        duration: Duration(microseconds: 1), curve: Curves.linear);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // dispose the controller
+    super.dispose();
+  }
+
   final DishDetailController dishDetailController =
       Get.find<DishDetailController>();
+
   final List list = ['Ingredients', 'Recipe'];
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -94,12 +129,14 @@ class OpenBottomSheet extends StatelessWidget {
                       isSelected: index,
                       onTap: () {
                         controller.isSelected = index;
+                        _scrollToTop();
                       })),
             ),
           ),
           getHeightSizedBox(h: 20),
           Expanded(
               child: SingleChildScrollView(
+                  controller: _scrollController,
                   child: controller.isSelected == 0 ? ingredients() : recipe()))
         ],
       ),
@@ -327,13 +364,16 @@ class OpenBottomSheet extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             vertical: 5, horizontal: kDefaultPadding),
         child: Row(children: [
-          buildSvgImage(
+          IconButton(
+            onPressed: () {
+              controller.isCheck = !controller.isCheck;
+            },
+            icon: buildSvgImage(
               image: controller.isCheck ? AppIcons.check : AppIcons.unCheck,
               height: 19,
               width: 19,
-              onTap: () {
-                controller.isCheck = !controller.isCheck;
-              }),
+            ),
+          ),
           getHeightSizedBox(w: 15),
           Text(
             'Paneer',

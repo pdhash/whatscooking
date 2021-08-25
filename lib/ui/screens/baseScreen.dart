@@ -26,7 +26,7 @@ class BaseScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBar(
         appBarActionButtonType: AppBarActionButtonType.notification,
-        appBarLeadingButtonType: AppBarLeadingButtonType.menu,
+        appBarLeadingButtonType: AppBarLeadingButtonType.none,
         color: Colors.transparent,
       ),
       body: GetBuilder(
@@ -92,17 +92,20 @@ class _BottomBarState extends State<BottomBar> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(
                       list.length,
-                      (index) => buildSvgImage(
-                          image: list[index]['image'],
-                          height: list[index]['height'],
-                          width: list[index]['width'],
-                          color: controller.selectedIndex == index
-                              ? AppColor.kPrimaryColor
-                              : null,
-                          onTap: () {
-                            controller.selectedIndex = index;
-                            print(controller.selectedIndex);
-                          })),
+                      (index) => IconButton(
+                            onPressed: () {
+                              controller.selectedIndex = index;
+                              print(controller.selectedIndex);
+                            },
+                            icon: buildSvgImage(
+                              image: list[index]['image'],
+                              height: list[index]['height'],
+                              width: list[index]['width'],
+                              color: controller.selectedIndex == index
+                                  ? AppColor.kPrimaryColor
+                                  : null,
+                            ),
+                          )),
                 ),
               ),
               Positioned(

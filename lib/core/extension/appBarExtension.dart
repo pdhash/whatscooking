@@ -12,11 +12,8 @@ extension AppbarLeadingButtonExtension on AppBarLeadingButtonType {
           onPressed: func,
           icon: buildSvgImage(image: AppIcons.back, height: 15, width: 21),
         );
-      case AppBarLeadingButtonType.menu:
-        return IconButton(
-          onPressed: func,
-          icon: buildSvgImage(image: AppIcons.menu, height: 16, width: 24),
-        );
+      case AppBarLeadingButtonType.none:
+        return IconButton(onPressed: () {}, icon: SizedBox());
     }
   }
 }

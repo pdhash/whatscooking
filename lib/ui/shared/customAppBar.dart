@@ -11,27 +11,26 @@ PreferredSizeWidget appBar(
     Function()? onActionButtonTap,
     Color color = Colors.white12}) {
   return PreferredSize(
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: SafeArea(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: kDefaultPadding - 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                appBarLeadingButtonType.add(onLeadingButtonTap),
-                AppLogo(
-                  height: 80,
-                  width: 80,
-                  color: color,
-                ),
-                appBarActionButtonType.add(onActionButtonTap)
-              ],
+    child: SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding - 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            appBarLeadingButtonType.add(onLeadingButtonTap),
+            Center(
+              child: AppLogo(
+                height: 80,
+                width: 80,
+                color: color,
+              ),
             ),
-          ),
+            appBarActionButtonType.add(onActionButtonTap)
+          ],
         ),
       ),
-      preferredSize: Size.fromHeight(90));
+    ),
+    preferredSize: Size.fromHeight(90),
+  );
 }

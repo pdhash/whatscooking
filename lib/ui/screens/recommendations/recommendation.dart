@@ -15,8 +15,65 @@ class Recommendations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(builder: (RecController controller) {
-      Widget screenTwo() {
+      return controller.isSpin
+          ? SpinScreen()
+          : SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    CustomButton(
+                      text: 'Aaj Kya Banaye?',
+                      onTap: () {},
+                      radius: 50,
+                      height: 35,
+                      width: 160,
+                      fontSize: 14,
+                    ),
+                    getHeightSizedBox(h: 9),
+                    Column(
+                      children: List.generate(
+                          3,
+                          (index) => recFoodBox(
+                              image: AppImages.recFoodBoxPhoto,
+                              title: 'Butter Paneer')),
+                    ),
+                    getHeightSizedBox(h: 9),
+                    GestureDetector(
+                      onTap: () {
+                        controller.isSpin = true;
+                      },
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 5,
+                        children: [
+                          buildSvgImage(
+                              image: AppIcons.wheel, height: 40, width: 40),
+                          Text(
+                            'Help me choose',
+                            style: TextStyle(
+                                color: AppColor.kPrimaryColor,
+                                fontSize: getWidth(15),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    getHeightSizedBox(h: 25)
+                  ],
+                ),
+              ),
+            );
+    });
+  }
+}
+
+class SpinScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      builder: (RecController controller) {
         return SingleChildScrollView(
+          controller: ScrollController(initialScrollOffset: 0),
           child: Column(
             children: [
               getHeightSizedBox(h: 10),
@@ -26,119 +83,45 @@ class Recommendations extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: getWidth(25)),
               ),
-              Container(
-                height: 500,
-                //   child: FortuneWheel(
-                //     selected: Stream.value(0),
-                //     // physics: PanPhysics(),
-                //     duration: Duration(seconds: 5),
-                //     items: [
-                //       FortuneItem(
-                //         child: Text('A'),
-                //         // style: FortuneItemStyle(
-                //         //   color: Colors.red,
-                //         //   borderColor: Colors.green,
-                //         //   borderWidth: 3,
-                //         // ),
-                //       ),
-                //       FortuneItem(child: Text('B')),
-                //       FortuneItem(child: Text('B')),
-                //     ],
-                //   ),
-              ),
+              // Container(
+              //   height: 500,
+              //     child: FortuneWheel(
+              //       selected: Stream.value(0),
+              //       // physics: PanPhysics(),
+              //       duration: Duration(seconds: 5),
+              //       items: [
+              //         FortuneItem(
+              //           child: Text('A'),
+              //           // style: FortuneItemStyle(
+              //           //   color: Colors.red,
+              //           //   borderColor: Colors.green,
+              //           //   borderWidth: 3,
+              //           // ),
+              //         ),
+              //         FortuneItem(child: Text('B')),
+              //         FortuneItem(child: Text('B')),
+              //       ],
+              //     ),
+              // ),
               CustomButton(
                   text: 'Spin',
                   onTap: () {
                     Get.to(() => DishDetails());
+                    controller.isSpin = false;
                   })
             ],
           ),
         );
-      }
-
-      SingleChildScrollView screenOne() {
-        return SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Spacer(
-                        flex: 2,
-                      ),
-                      Text(
-                        'Lets Begin!',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: getWidth(25)),
-                      ),
-                      Spacer(),
-                      buildSvgImage(
-                          image: AppIcons.filter, height: 17, width: 18),
-                    ],
-                  ),
-                ),
-                Text(
-                  'We suggest 3 recipes for every meal',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: getWidth(15)),
-                ),
-                getHeightSizedBox(h: 7),
-                CustomButton(
-                  text: 'Show me suggestions!',
-                  onTap: () {},
-                  radius: 50,
-                  height: 36,
-                  width: 211,
-                  fontSize: 14,
-                ),
-                getHeightSizedBox(h: 9),
-                Column(
-                  children: List.generate(
-                      3,
-                      (index) => recFoodBox(
-                          image: AppImages.recFoodBoxPhoto,
-                          title: 'Butter Paneer')),
-                ),
-                getHeightSizedBox(h: 9),
-                GestureDetector(
-                  onTap: () {
-                    controller.isSpin = true;
-                  },
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 5,
-                    children: [
-                      buildSvgImage(
-                          image: AppIcons.wheel, height: 40, width: 40),
-                      Text(
-                        'Help me choose',
-                        style: TextStyle(
-                            color: AppColor.kPrimaryColor,
-                            fontSize: getWidth(15),
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                ),
-                getHeightSizedBox(h: 25)
-              ],
-            ),
-          ),
-        );
-      }
-
-      return controller.isSpin ? screenTwo() : screenOne();
-    });
+      },
+    );
   }
 }
 
 Widget recFoodBox(
-    {required String image, Function()? onTap, required String title}) {
+    {required String image,
+    Function()? onTap,
+    required String title,
+    bool isNotWeight = false}) {
   return GestureDetector(
     onTap: onTap,
     child: ClipRRect(
@@ -154,7 +137,7 @@ Widget recFoodBox(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.antiAlias,
         child: Container(
-          height: 50,
+          height: isNotWeight ? 40 : 50,
           width: Get.width,
           color: Colors.black.withOpacity(0.20),
           child: Center(
@@ -164,7 +147,9 @@ Widget recFoodBox(
                 Text(
                   title,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: getWidth(25)),
+                    fontWeight: isNotWeight ? null : FontWeight.bold,
+                    fontSize: getWidth(isNotWeight ? 20 : 25),
+                  ),
                 ),
               ],
             ),

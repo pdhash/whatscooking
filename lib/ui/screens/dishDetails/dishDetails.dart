@@ -29,106 +29,112 @@ class DishDetails extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage(AppImages.onBoardingBackGround),
                   fit: BoxFit.cover)),
-          alignment: Alignment.bottomCenter,
-          child: FittedBox(
-            child: Container(
-              //height: 250,
-              width: Get.width,
-              decoration: BoxDecoration(color: Colors.black26),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 7, horizontal: kDefaultPadding - 5),
-                    child: Text(
-                      'Mughle Shahi Butter Paneer Masala',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: getWidth(34)),
-                    ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: AppColor.kPrimaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(50),
+                          topRight: Radius.circular(50))),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5,
+                    children: [
+                      Icon(Icons.access_time),
+                      Text(
+                        '30m',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: getWidth(15)),
+                      ),
+                    ],
                   ),
-                  Container(
-                    height: 180, width: Get.width,
-
-                    decoration: BoxDecoration(
-                        color: AppColor.kScaffoldColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(35))),
-                    child: Column(
-                      children: [
-                        Spacer(
-                          flex: 3,
-                        ),
-                        CustomButton(
-                          text: 'Yes, Im making this!',
-                          onTap: () {},
-                          radius: 50,
-                          height: 60,
-                          width: 233,
-                        ),
-                        Spacer(
-                          flex: 4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => Ingredients());
-                          },
-                          child: Text(
-                            'Ingredients       Recipe',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xffA6A6A6),
-                                fontSize: getWidth(26)),
-                          ),
-                        ),
-                        Spacer(
-                          flex: 2,
-                        ),
-                      ],
-                    ),
-                    //  color: AppColor.kScaffoldColor,
-                  )
-                ],
+                ),
               ),
-            ),
+              FittedBox(
+                child: Container(
+                  //height: 250,
+                  width: Get.width,
+                  decoration: BoxDecoration(color: Colors.black26),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7, horizontal: kDefaultPadding - 5),
+                        child: Text(
+                          'Mughle Shahi Butter Paneer Masala',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: getWidth(34)),
+                        ),
+                      ),
+                      Container(
+                        height: 180, width: Get.width,
+
+                        decoration: BoxDecoration(
+                            color: AppColor.kScaffoldColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35))),
+                        child: Column(
+                          children: [
+                            Spacer(
+                              flex: 3,
+                            ),
+                            CustomButton(
+                              text: 'Yes, Im making this!',
+                              onTap: () {},
+                              radius: 50,
+                              height: 60,
+                              width: 233,
+                            ),
+                            Spacer(
+                              flex: 4,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => Ingredients());
+                              },
+                              child: Wrap(
+                                spacing: getWidth(30),
+                                children: [
+                                  Text(
+                                    'Ingredients',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xffA6A6A6),
+                                        fontSize: getWidth(26)),
+                                  ),
+                                  Text(
+                                    'Recipe',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xffA6A6A6),
+                                        fontSize: getWidth(26)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(
+                              flex: 2,
+                            ),
+                          ],
+                        ),
+                        //  color: AppColor.kScaffoldColor,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-// SafeArea(
-// bottom: false,
-// child: Stack(
-// children: [
-// Positioned(
-// bottom: 130,
-// child: Container(
-// height: 130,
-// width: Get.width,
-// padding:
-// EdgeInsets.symmetric(horizontal: kDefaultPadding - 10)
-// .copyWith(top: 10),
-// color: Colors.black26,
-// child: Text(
-// 'Mughle Shahi Butter Paneer Masala',
-// style: TextStyle(
-// fontWeight: FontWeight.bold, fontSize: getWidth(34)),
-// ),
-// ),
-// ),
-// Positioned(
-// bottom: 0,
-// child: Container(
-// height: getHeight(200),
-// width: Get.width,
-// decoration: BoxDecoration(
-// color: AppColor.kScaffoldColor,
-// borderRadius: BorderRadius.only(
-// topRight: Radius.circular(40),
-// topLeft: Radius.circular(40))),
-// ),
-// ),
-// ],
-// ),
-// )

@@ -144,7 +144,8 @@ class ShoppingList extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
                             fontSize: getWidth(20)),
-                      )
+                      ),
+                      getHeightSizedBox(h: 50),
                     ],
                   ),
           )

@@ -64,13 +64,11 @@ class AppLogo extends StatelessWidget {
         borderRadius: BorderRadius.circular(90),
         child: BackdropFilter(
           filter: new ImageFilter.blur(
-              sigmaX: 7.0, sigmaY: 7.0, tileMode: TileMode.mirror),
+            sigmaX: 7.0,
+            sigmaY: 7.0,
+          ),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
-            // child: buildSvgImage(
-            //     image: 'assets/images/onBoarding/logo.svg',
-            //     height: height as double,
-            //     width: width as double),
             child: Container(
               height: getWidth(height as double),
               width: getWidth(width as double),
@@ -88,24 +86,20 @@ class AppLogo extends StatelessWidget {
   }
 }
 
-Widget buildSvgImage(
-    {required String image,
-    required double height,
-    required double width,
-    Color? color,
-    Function()? onTap}) {
-  return IconButton(
-    onPressed: onTap,
-    padding: EdgeInsets.zero,
-    icon: Container(
-      //  color: Colors.green,
-      height: getWidth(height),
-      width: getWidth(width),
-      child: SvgPicture.asset(
-        image,
-        color: color,
-        fit: BoxFit.fill,
-      ),
+Widget buildSvgImage({
+  required String image,
+  required double height,
+  required double width,
+  Color? color,
+}) {
+  return Container(
+    //  color: Colors.green,
+    height: getWidth(height),
+    width: getWidth(width),
+    child: SvgPicture.asset(
+      image,
+      color: color,
+      fit: BoxFit.fill,
     ),
   );
 }
