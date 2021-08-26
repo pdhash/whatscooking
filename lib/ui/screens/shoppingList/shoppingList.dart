@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
@@ -6,7 +7,6 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/shoppingListController.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
-import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
 class ShoppingList extends StatelessWidget {
   final ShoppingListController shoppingListController =
@@ -122,8 +122,6 @@ class ShoppingList extends StatelessWidget {
                       buildCustomButton(
                           title: 'WhatsApp to',
                           onTap: () {},
-                          height: 34,
-                          width: 34,
                           image: AppIcons.whatsapp),
                       getHeightSizedBox(h: 15),
                       buildCustomButton(
@@ -134,8 +132,6 @@ class ShoppingList extends StatelessWidget {
                       buildCustomButton(
                           title: 'Order on Amazon',
                           onTap: () {},
-                          height: 11,
-                          width: 60,
                           image: AppIcons.amazon),
                       getHeightSizedBox(h: 40),
                       Text(
@@ -154,18 +150,17 @@ class ShoppingList extends StatelessWidget {
     );
   }
 
-  CustomButton buildCustomButton(
-      {required String title,
-      Function()? onTap,
-      required String image,
-      double height = 23,
-      double width = 23}) {
+  CustomButton buildCustomButton({
+    required String title,
+    Function()? onTap,
+    required String image,
+  }) {
     return CustomButton(
         text: '',
         widget: Row(
           children: [
             Spacer(),
-            buildSvgImage(image: image, height: height, width: width),
+            SvgPicture.asset(image),
             Spacer(),
             Text(
               title,

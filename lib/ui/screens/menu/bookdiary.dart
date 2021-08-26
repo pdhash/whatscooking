@@ -55,7 +55,11 @@ class _BookDiaryState extends State<BookDiary> {
             ),
             getHeightSizedBox(h: 25),
             // Expanded(child: CookDiary())
-            Expanded(child: Favourites())
+            GetBuilder(
+                builder: (BookDiaryController controller) => Expanded(
+                    child: controller.isSelected == 0
+                        ? CookDiary()
+                        : Favourites()))
           ],
         ));
   }
@@ -100,22 +104,33 @@ class Favourites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      itemCount: 10,
       padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
       itemBuilder: (BuildContext context, int index) {
         return ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Card(
-            child: Image.asset(
-              AppImages.recFoodBoxPhoto,
-              fit: BoxFit.cover,
+          borderRadius: BorderRadius.circular(23),
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      AppImages.recFoodBoxPhoto,
+                    ),
+                    fit: BoxFit.cover)),
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(
+                Icons.favorite,
+                color: AppColor.kPrimaryColor,
+              ),
+              onPressed: () {},
             ),
           ),
         );
       },
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 3,
-          crossAxisSpacing: 3,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
           childAspectRatio: 0.85),
     );
   }

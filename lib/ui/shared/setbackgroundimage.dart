@@ -96,10 +96,12 @@ Widget buildSvgImage({
     //  color: Colors.green,
     height: getWidth(height),
     width: getWidth(width),
-    child: SvgPicture.asset(
-      image,
-      color: color,
-      fit: BoxFit.fill,
+    child: Center(
+      child: SvgPicture.asset(
+        image,
+        color: color,
+        fit: BoxFit.fill,
+      ),
     ),
   );
 }

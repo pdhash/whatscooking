@@ -5,32 +5,42 @@ import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/ui/screens/login/login.dart';
 import 'package:whatscooking/ui/screens/menu/bookdiary.dart';
+import 'package:whatscooking/ui/screens/menu/profile.dart';
+import 'package:whatscooking/ui/screens/menu/weeklyreport.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
 import 'browse.dart';
+import 'myPrefrences.dart';
 
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          getHeightSizedBox(h: 50),
-          Expanded(
-            child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35),
-                        topRight: Radius.circular(35)),
-                    image: DecorationImage(
-                        image: AssetImage(AppImages.menuBackground),
-                        fit: BoxFit.fitWidth)),
-                child: MenuList()),
-          )
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        getHeightSizedBox(h: 20),
+        Expanded(
+          child: Container(
+              //height: getHeight(570),
+              // width: double.infinity,
+
+              decoration: BoxDecoration(
+                // color: Colors.red,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(35),
+                    topRight: Radius.circular(35)),
+                image: DecorationImage(
+                    image: AssetImage(
+                      AppImages.menuBackground,
+                    ),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter),
+              ),
+              child: MenuList()),
+        )
+      ],
     );
   }
 }
@@ -67,7 +77,15 @@ class MenuList extends StatelessWidget {
                 onTap: () {
                   if (index == 0)
                     Get.to(() => Browse());
-                  else if (index == 1) Get.to(() => BookDiary());
+                  else if (index == 1)
+                    Get.to(() => BookDiary());
+                  else if (index == 2)
+                    Get.to(() => WeeklyReport());
+                  else if (index == 3)
+                    Get.to(() => MyPreferences());
+                  else if (index == 4)
+                    Get.to(() => MyProfile());
+                  else if (index == 5) Get.offAll(() => Login());
                 },
                 child: Row(
                   children: [

@@ -25,4 +25,11 @@ class AppIcons {
   static const String facebook = 'assets/icons/login/Button2@3x.png';
   static const String google = 'assets/icons/login/Button1@3x.png';
   static const String trueCaller = 'assets/icons/login/truecaller@3x.png';
+  static const String kingHead = 'assets/icons/menu/kingHead.svg';
+  static const String edit = 'assets/icons/menu/edit.svg';
+  static const String call = 'assets/icons/menu/call.svg';
+  static const String chefPro = 'assets/icons/menu/chefpro.svg';
+  static const String medal = 'assets/icons/menu/medal.svg';
+  static const String kingHeadLittle = 'assets/icons/menu/kinghead2.svg';
+  static const String relation = 'assets/icons/menu/relation.svg';
 }
