@@ -6,6 +6,7 @@ import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/ui/screens/home/addPost.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
 class Home extends StatelessWidget {
@@ -30,7 +31,9 @@ class Home extends StatelessWidget {
               Positioned(
                 right: 10,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => AddPost());
+                  },
                   icon: Icon(
                     Icons.add,
                     color: Colors.white60,
@@ -79,87 +82,83 @@ class Home extends StatelessWidget {
             ),
           ),
           getHeightSizedBox(h: 20),
-          Column(
-            children: List.generate(
-                5,
-                (index) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              buildCircleProfile(
-                                  image: AppImages.background,
-                                  height: 32,
-                                  width: 32),
-                              getHeightSizedBox(w: 15),
-                              Text(
-                                'Jane Doe',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: getWidth(20)),
-                              ),
-                              Spacer(),
-                              Text(
-                                'Follow',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: getWidth(20),
-                                    color: AppColor.kPrimaryColor),
-                              ),
-                            ],
-                          ),
-                          getHeightSizedBox(h: 15),
-                          Text(
-                            'Brownie with almonds and melted chocolate',
-                            style: TextStyle(fontSize: getWidth(20)),
-                          ),
-                          getHeightSizedBox(h: 10),
-                          Container(
-                            height: getHeight(350),
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                image: DecorationImage(
-                                    image: AssetImage(AppImages.background),
-                                    fit: BoxFit.cover)),
-                          ),
-                          getHeightSizedBox(h: 20),
-                          Row(
-                            children: [
-                              getHeightSizedBox(w: 5),
-                              GestureDetector(
-                                onTap: () {},
-                                child: buildSvgImage(
-                                    image: AppIcons.loveCart,
-                                    height: 23,
-                                    width: 26),
-                              ),
-                              getHeightSizedBox(w: 15),
-                              GestureDetector(
-                                onTap: () {},
-                                child: buildSvgImage(
-                                    image: AppIcons.comment,
-                                    height: 23,
-                                    width: 25),
-                              ),
-                              getHeightSizedBox(w: 15),
-                              GestureDetector(
-                                onTap: () {},
-                                child: buildSvgImage(
-                                    image: AppIcons.share,
-                                    height: 23,
-                                    width: 19),
-                              ),
-                            ],
-                          ),
-                          getHeightSizedBox(h: 25),
-                        ],
-                      ),
-                    )),
-          ),
+          postView(),
         ],
       ),
+    );
+  }
+
+  Column postView() {
+    return Column(
+      children: List.generate(
+          5,
+          (index) => Container(
+                margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        buildCircleProfile(
+                            image: AppImages.background, height: 32, width: 32),
+                        getHeightSizedBox(w: 15),
+                        Text(
+                          'Jane Doe',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: getWidth(20)),
+                        ),
+                        Spacer(),
+                        Text(
+                          'Follow',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: getWidth(20),
+                              color: AppColor.kPrimaryColor),
+                        ),
+                      ],
+                    ),
+                    getHeightSizedBox(h: 15),
+                    Text(
+                      'Brownie with almonds and melted chocolate',
+                      style: TextStyle(fontSize: getWidth(20)),
+                    ),
+                    getHeightSizedBox(h: 10),
+                    Container(
+                      height: getHeight(350),
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          image: DecorationImage(
+                              image: AssetImage(AppImages.background),
+                              fit: BoxFit.cover)),
+                    ),
+                    getHeightSizedBox(h: 20),
+                    Row(
+                      children: [
+                        getHeightSizedBox(w: 5),
+                        GestureDetector(
+                          onTap: () {},
+                          child: buildSvgImage(
+                              image: AppIcons.loveCart, height: 23, width: 26),
+                        ),
+                        getHeightSizedBox(w: 15),
+                        GestureDetector(
+                          onTap: () {},
+                          child: buildSvgImage(
+                              image: AppIcons.comment, height: 23, width: 25),
+                        ),
+                        getHeightSizedBox(w: 15),
+                        GestureDetector(
+                          onTap: () {},
+                          child: buildSvgImage(
+                              image: AppIcons.share, height: 23, width: 19),
+                        ),
+                      ],
+                    ),
+                    getHeightSizedBox(h: 25),
+                  ],
+                ),
+              )),
     );
   }
 }

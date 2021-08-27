@@ -32,4 +32,6 @@ class AppIcons {
   static const String medal = 'assets/icons/menu/medal.svg';
   static const String kingHeadLittle = 'assets/icons/menu/kinghead2.svg';
   static const String relation = 'assets/icons/menu/relation.svg';
+  static const String smile = 'assets/icons/dishdetails/smile.svg';
+  static const String relational = 'assets/icons/home/Icon Friend.svg';
 }

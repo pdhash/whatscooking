@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appColors.dart';
@@ -8,10 +10,31 @@ import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/recController.dart';
 import 'package:whatscooking/ui/screens/dishDetails/dishDetails.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
+import 'package:whatscooking/ui/shared/customDialog.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
-class Recommendations extends StatelessWidget {
+class Recommendations extends StatefulWidget {
+  @override
+  _RecommendationsState createState() => _RecommendationsState();
+}
+
+class _RecommendationsState extends State<Recommendations> {
+  @override
+  void initState() {
+    Timer(Duration(seconds: 1), () {
+      showCustomDialog(context: context);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   final RecController recController = Get.put(RecController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(builder: (RecController controller) {

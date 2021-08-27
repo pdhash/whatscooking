@@ -273,7 +273,7 @@ class MyPreferences extends StatelessWidget {
                 ),
           ),
         ),
-        getHeightSizedBox(h: 7),
+        getHeightSizedBox(h: 8),
         AspectRatio(
           aspectRatio: 8,
           child: Container(
@@ -291,6 +291,7 @@ class MyPreferences extends StatelessWidget {
                           fontSize: getWidth(12),
                           fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 7),
                           border: InputBorder.none,
                           hintText: 'Add instruction',
                           hintStyle: TextStyle(
