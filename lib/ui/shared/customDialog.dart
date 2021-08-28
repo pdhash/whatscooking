@@ -5,6 +5,7 @@ import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/ui/screens/menu/myPrefrences.dart';
 
 import 'customButton.dart';
 
@@ -76,7 +77,12 @@ Future showCustomDialog({
                     ),
                   ),
                   getHeightSizedBox(h: 25),
-                  CustomButton(text: 'Sure, I have 2 mins', onTap: () {}),
+                  CustomButton(
+                      text: 'Sure, I have 2 mins',
+                      onTap: () {
+                        Get.back();
+                        Get.to(() => MyPreferences());
+                      }),
                   getHeightSizedBox(h: 15),
                   CustomButton(
                       text: "I'll do it later",

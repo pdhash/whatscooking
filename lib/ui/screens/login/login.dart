@@ -178,8 +178,8 @@ class CustomTextField extends StatelessWidget {
               ),
             ),
             getHeightSizedBox(w: 5),
-            GestureDetector(
-              onTap: onTap,
+            TextButton(
+              onPressed: onTap,
               child: Text(
                 suffixText,
                 style: TextStyle(

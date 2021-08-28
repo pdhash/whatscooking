@@ -67,7 +67,7 @@ class Calendar extends StatelessWidget {
                 ),
                 getHeightSizedBox(w: 20),
                 Text(
-                  'May 31- June 6',
+                  'May 31 - June 6',
                   style: TextStyle(fontSize: getWidth(16)),
                 ),
                 getHeightSizedBox(w: 20),
@@ -78,58 +78,7 @@ class Calendar extends StatelessWidget {
               ],
             ),
             getHeightSizedBox(h: 20),
-            Column(
-              children: List.generate(
-                  7,
-                  (index) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: getWidth(43),
-                              width: getWidth(70),
-                              decoration: BoxDecoration(
-                                  color: Color(0xff4A4A4A),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Center(
-                                child: Text(
-                                  'Day ${index + 1}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: getWidth(12)),
-                                ),
-                              ),
-                            ),
-                            getHeightSizedBox(w: 18),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: List.generate(
-                                    3,
-                                    (index) => Container(
-                                          height: getWidth(70),
-                                          width: getWidth(70),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              browsList1[index],
-                                              style: TextStyle(
-                                                  fontSize: getWidth(12),
-                                                  color: Color(0xffAEAEAE),
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        )),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-            ),
+            WeeklyPlan(),
             getHeightSizedBox(h: 25),
             CustomButton(
               text: 'Add Ingredietns to Shopping List',
@@ -165,6 +114,71 @@ class Calendar extends StatelessWidget {
                     fontWeight: FontWeight.w600, fontSize: getWidth(12)),
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class WeeklyPlan extends StatelessWidget {
+  final Function()? onCircleTap;
+
+  const WeeklyPlan({Key? key, this.onCircleTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+        7,
+        (index) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 7),
+          child: Row(
+            children: [
+              Container(
+                height: getWidth(43),
+                width: getWidth(70),
+                decoration: BoxDecoration(
+                    color: Color(0xff4A4A4A),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Center(
+                  child: Text(
+                    'Day ${index + 1}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: getWidth(12)),
+                  ),
+                ),
+              ),
+              getHeightSizedBox(w: 18),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    3,
+                    (index) => GestureDetector(
+                      onTap: onCircleTap,
+                      child: Container(
+                        height: getWidth(70),
+                        width: getWidth(70),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Center(
+                          child: Text(
+                            browsList1[index],
+                            style: TextStyle(
+                                fontSize: getWidth(12),
+                                color: Color(0xffAEAEAE),
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

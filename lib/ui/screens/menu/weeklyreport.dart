@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -7,6 +8,7 @@ import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 
 class WeeklyReport extends StatelessWidget {
+  final List list = ['Calories', 'Protein', 'Carbs'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,36 +30,143 @@ class WeeklyReport extends StatelessWidget {
               style: TextStyle(fontSize: getWidth(20)),
             ),
             getHeightSizedBox(h: 20),
-
             ProgressBar(),
-            // Center(
-            //   child: SfCartesianChart(
-            //       primaryXAxis: NumericAxis(),
-            //       // Chart title
-            //       title: ChartTitle(text: 'Half yearly sales analysis'),
-            //       // Enable legend
-            //       // legend: Legend(isVisible: true),
-            //       // Enable tooltip
-            //       //  tooltipBehavior: TooltipBehavior(enable: true),
-            //       series: <ChartSeries<_SalesData, String>>[
-            //         SplineAreaSeries(
-            //             dataSource: data,
-            //             xValueMapper: (_SalesData sales, _) => sales.year,
-            //             yValueMapper: (_SalesData sales, _) => sales.sales)
-            //         // LineSeries<_SalesData, String>(
-            //         //     dataSource: data,
-            //         //     xValueMapper: (_SalesData sales, _) => sales.year,
-            //         //     yValueMapper: (_SalesData sales, _) => sales.year,
-            //         //     name: 'Sales',
-            //         //     // Enable data label
-            //         //     dataLabelSettings: DataLabelSettings(isVisible: false))
-            //       ]),
-            // ),
+            getHeightSizedBox(h: 30),
+            Column(
+                children: List.generate(
+              3,
+              (index) => Column(
+                children: [
+                  Text(
+                    list[index],
+                    style: TextStyle(fontSize: getWidth(20)),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    height: 150,
+                    child: LineChart(
+                      globalData(),
+                    ),
+                  ),
+                ],
+              ),
+            ))
           ],
         ),
       ),
     );
   }
+}
+
+LineChartData globalData() {
+  return LineChartData(
+    clipData: FlClipData.horizontal(),
+    gridData: FlGridData(
+      show: true,
+      drawVerticalLine: true,
+      getDrawingHorizontalLine: (value) {
+        return FlLine(
+          color: Colors.white.withOpacity(0.7),
+          strokeWidth: 0,
+        );
+      },
+      getDrawingVerticalLine: (value) {
+        return FlLine(
+          color: Colors.white.withOpacity(0.7),
+          strokeWidth: 1,
+        );
+      },
+    ),
+    titlesData: FlTitlesData(
+      show: true,
+      rightTitles: SideTitles(showTitles: false),
+      topTitles: SideTitles(showTitles: false),
+      bottomTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 22,
+        interval: 1,
+        getTextStyles: (context, value) =>
+            TextStyle(color: Colors.white, fontSize: getWidth(20)),
+        getTitles: (value) {
+          print(value);
+          switch (value.toInt()) {
+            case 0:
+              return 'M';
+            case 1:
+              return 'T';
+            case 2:
+              return 'W';
+            case 3:
+              return 'T';
+            case 4:
+              return 'F';
+            case 5:
+              return 'S';
+            case 6:
+              return 'S';
+          }
+          return '';
+        },
+        margin: 20,
+      ),
+      leftTitles: SideTitles(
+        showTitles: true,
+        interval: 1,
+        getTextStyles: (context, value) => TextStyle(
+          color: Colors.white,
+          fontSize: getWidth(12),
+        ),
+        getTitles: (value) {
+          switch (value.toInt()) {
+            case 0:
+              return '0';
+            case 2:
+              return '1500';
+            case 4:
+              return '3000';
+          }
+          return '';
+        },
+        reservedSize: 30,
+        margin: 18,
+      ),
+    ),
+    borderData: FlBorderData(
+        show: true,
+        border: Border.symmetric(
+            vertical:
+                BorderSide(color: Colors.white.withOpacity(0.7), width: 1))),
+    lineTouchData: LineTouchData(enabled: false),
+    minX: 0,
+    maxX: 6,
+    minY: 0,
+    maxY: 6,
+    lineBarsData: [
+      LineChartBarData(
+        show: true,
+        spots: [
+          FlSpot(0, 1),
+          FlSpot(2.6, 1),
+          FlSpot(4.9, 5),
+          FlSpot(6.8, 3.1),
+          FlSpot(8, 4),
+          FlSpot(9.5, 3),
+          FlSpot(11, 4),
+        ],
+        isCurved: true,
+        barWidth: 3,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        // belowBarData: BarAreaData(
+        //   show: true,
+        //   colors:
+        //       gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        // ),
+      ),
+    ],
+  );
 }
 
 List<_SalesData> data = [

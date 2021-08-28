@@ -49,7 +49,6 @@ class MyProfile extends StatelessWidget {
                 CustomTextField2(
                   controller: name,
                   hintText: 'Name',
-                  length: 10,
                   giveSpace: false,
                   textInputType: TextInputType.text,
                   prefixWidget: buildSvgImage(

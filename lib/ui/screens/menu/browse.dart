@@ -6,6 +6,7 @@ import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/browseController.dart';
+import 'package:whatscooking/ui/screens/calendar/calendar.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 
 class Browse extends StatelessWidget {
@@ -55,11 +56,34 @@ class Browse extends StatelessWidget {
               getHeightSizedBox(h: 20),
               buildRow2(),
               getHeightSizedBox(h: 20),
+              pageViews()
             ],
           ),
         ),
       ),
     );
+  }
+
+  pageViews() {
+    return GetBuilder(builder: (BrowseController controller) {
+      PageController pageController = PageController();
+      return Expanded(
+        child: PageView(
+          controller: pageController,
+          children: [
+            SingleChildScrollView(
+              child: WeeklyPlan(
+                onCircleTap: () {
+                  pageController.animateToPage(2,
+                      duration: Duration(seconds: 1), curve: Curves.slowMiddle);
+                },
+              ),
+            ),
+            Container()
+          ],
+        ),
+      );
+    });
   }
 
   Widget buildRow2() {

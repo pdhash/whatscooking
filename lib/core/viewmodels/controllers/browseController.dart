@@ -18,4 +18,13 @@ class BrowseController extends GetxController {
     _timeSelected = value;
     update();
   }
+
+  int _currentPage = 0;
+
+  int get currentPage => _currentPage;
+
+  set currentPage(int value) {
+    _currentPage = value;
+    update();
+  }
 }

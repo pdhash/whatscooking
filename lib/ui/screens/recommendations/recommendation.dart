@@ -106,32 +106,14 @@ class SpinScreen extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: getWidth(25)),
               ),
-              // Container(
-              //   height: 500,
-              //     child: FortuneWheel(
-              //       selected: Stream.value(0),
-              //       // physics: PanPhysics(),
-              //       duration: Duration(seconds: 5),
-              //       items: [
-              //         FortuneItem(
-              //           child: Text('A'),
-              //           // style: FortuneItemStyle(
-              //           //   color: Colors.red,
-              //           //   borderColor: Colors.green,
-              //           //   borderWidth: 3,
-              //           // ),
-              //         ),
-              //         FortuneItem(child: Text('B')),
-              //         FortuneItem(child: Text('B')),
-              //       ],
-              //     ),
-              // ),
+              Image(image: AssetImage('assets/images/onBoarding/temp.png')),
               CustomButton(
-                  text: 'Spin',
-                  onTap: () {
-                    Get.to(() => DishDetails());
-                    controller.isSpin = false;
-                  })
+                text: 'Spin',
+                onTap: () {
+                  Get.to(() => DishDetails());
+                  controller.isSpin = false;
+                },
+              ),
             ],
           ),
         );

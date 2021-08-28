@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,8 +11,10 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/globals.dart';
 import 'package:whatscooking/ui/screens/menu/browse.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
+import 'package:whatscooking/ui/shared/imagePicker.dart';
 
 import 'home.dart';
 
@@ -27,6 +31,8 @@ class _AddPostState extends State<AddPost> {
   }
 
   final TextEditingController caption = TextEditingController();
+  final ImagePickerController imagePickerController =
+      Get.put(ImagePickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,9 @@ class _AddPostState extends State<AddPost> {
         appBar: appBar(
             appBarActionButtonType: AppBarActionButtonType.notification,
             appBarLeadingButtonType: AppBarLeadingButtonType.back,
-            onLeadingButtonTap: () => Get.back(),
+            onLeadingButtonTap: () {
+              Get.back();
+            },
             onActionButtonTap: () {
               showModalBottomSheet(
                 context: context,
@@ -47,51 +55,54 @@ class _AddPostState extends State<AddPost> {
                 ),
               );
             }),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               getHeightSizedBox(h: 10),
               header(),
-              Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          buildCircleProfile(
-                              image: AppImages.background,
-                              height: 40,
-                              width: 40),
-                        ],
-                      ),
-                      getHeightSizedBox(w: 15),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          getHeightSizedBox(h: 10),
-                          Text(
-                            'Jane Doe',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: getWidth(18)),
-                          ),
-                          getHeightSizedBox(h: 20),
-                          dropDownButton(context),
-                          getHeightSizedBox(h: 7),
-                          CustomTextField2(
-                              controller: caption,
-                              width: getWidth(260),
-                              height: 40,
-                              hintText: 'Write something about your dish')
-                        ],
-                      ),
-                    ],
-                  ),
-                  getHeightSizedBox(h: 30),
-                  post()
-                ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            buildCircleProfile(
+                                image: AppImages.background,
+                                height: 40,
+                                width: 40),
+                          ],
+                        ),
+                        getHeightSizedBox(w: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            getHeightSizedBox(h: 10),
+                            Text(
+                              'Jane Doe',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: getWidth(18)),
+                            ),
+                            getHeightSizedBox(h: 20),
+                            dropDownButton(context),
+                            getHeightSizedBox(h: 7),
+                            CustomTextField2(
+                                controller: caption,
+                                width: getWidth(260),
+                                height: 40,
+                                hintText: 'Write something about your dish')
+                          ],
+                        ),
+                      ],
+                    ),
+                    getHeightSizedBox(h: 30),
+                    post()
+                  ],
+                ),
               )
             ],
           ),
@@ -100,23 +111,33 @@ class _AddPostState extends State<AddPost> {
     );
   }
 
-  GestureDetector post() {
-    return GestureDetector(
-      onTap: () {
-        openBottomSheet();
-      },
-      child: Container(
-        height: 200,
-        width: Get.width,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.white12, width: 1),
-            borderRadius: BorderRadius.circular(10)),
-        child: Center(
-          child: Text(
-            'Upload A Image',
-            style: TextStyle(color: AppColor.kPrimaryColor),
-          ),
-        ),
+  Widget post() {
+    return GetBuilder(
+      builder: (ImagePickerController controller) => GestureDetector(
+        onTap: () {
+          openBottomSheet();
+        },
+        child: Container(
+            height: 200,
+            width: Get.width,
+            decoration: BoxDecoration(
+                border: controller.image != null
+                    ? Border()
+                    : Border.all(color: Colors.white12, width: 1),
+                borderRadius: BorderRadius.circular(10),
+                image: controller.image == null
+                    ? null
+                    : DecorationImage(
+                        image: FileImage(controller.image as File),
+                        fit: BoxFit.cover)),
+            child: controller.image == null
+                ? Center(
+                    child: Text(
+                      'Upload A Image',
+                      style: TextStyle(color: AppColor.kPrimaryColor),
+                    ),
+                  )
+                : null),
       ),
     );
   }
@@ -187,6 +208,63 @@ class _AddPostState extends State<AddPost> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12))),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  getHeightSizedBox(h: 5),
+                  Container(
+                    height: 5,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        color: Color(0xff8A8A8F),
+                        borderRadius: BorderRadius.circular(50)),
+                  ),
+                  getHeightSizedBox(h: 25),
+                  Expanded(
+                    child: GridView.count(
+                      shrinkWrap: false,
+                      children: List.generate(
+                          9,
+                          (index) => GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                  if (index == 0)
+                                    appImagePicker.openBottomSheet(
+                                        context: context);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: index == 0
+                                          ? Color(0xff2D2D2D)
+                                          : Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: index == 0
+                                      ? Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(AppIcons.camera),
+                                              getHeightSizedBox(h: 10),
+                                              Text(
+                                                'Take Photo',
+                                                style: TextStyle(
+                                                    fontSize: getWidth(13),
+                                                    color: Color(0xff8A8A8F)),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                              )),
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                  ),
+                ],
+              ),
             );
           });
     });
@@ -196,21 +274,26 @@ class _AddPostState extends State<AddPost> {
     return Row(
       children: [
         Spacer(
-          flex: 3,
+          flex: 2,
         ),
         Text(
           'Meal Plan ',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: getWidth(25)),
         ),
         Spacer(
-          flex: 2,
+          flex: 1,
         ),
-        Text(
-          'Post',
-          style: TextStyle(
-              color: AppColor.kPrimaryColor,
-              fontWeight: FontWeight.w600,
-              fontSize: getWidth(20)),
+        TextButton(
+          onPressed: () {
+            //  appImagePicker.imagePickerController.reset();
+          },
+          child: Text(
+            'Post',
+            style: TextStyle(
+                color: AppColor.kPrimaryColor,
+                fontWeight: FontWeight.w600,
+                fontSize: getWidth(20)),
+          ),
         ),
       ],
     );

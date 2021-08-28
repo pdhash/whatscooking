@@ -224,6 +224,7 @@ class MyPreferences extends StatelessWidget {
                 CustomButton(
                   text: 'Save',
                   onTap: () {
+                    Get.back();
                     disposeKeyboard();
                   },
                   padding: 0,

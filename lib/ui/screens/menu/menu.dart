@@ -23,7 +23,7 @@ class Menu extends StatelessWidget {
         getHeightSizedBox(h: 20),
         Expanded(
           child: Container(
-              //height: getHeight(570),
+              // height: getHeight(560),
               // width: double.infinity,
 
               decoration: BoxDecoration(
@@ -48,71 +48,67 @@ class Menu extends StatelessWidget {
 class MenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        getHeightSizedBox(h: 40),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'More',
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: getWidth(25),
-                  decoration: TextDecoration.underline),
-            ),
-            getHeightSizedBox(w: 25),
-            SizedBox(
-              width: 3,
-            )
-          ],
-        ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              list.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  if (index == 0)
-                    Get.to(() => Browse());
-                  else if (index == 1)
-                    Get.to(() => BookDiary());
-                  else if (index == 2)
-                    Get.to(() => WeeklyReport());
-                  else if (index == 3)
-                    Get.to(() => MyPreferences());
-                  else if (index == 4)
-                    Get.to(() => MyProfile());
-                  else if (index == 5) Get.offAll(() => Login());
-                },
-                child: Row(
-                  children: [
-                    Spacer(),
-                    list[index].widget,
-                    getHeightSizedBox(w: 10),
-                    Text(
-                      list[index].title,
-                      style: TextStyle(fontSize: getWidth(16)),
-                    ),
-                    getHeightSizedBox(w: kDefaultPadding),
-                    Container(
-                      width: 3,
-                      height: 17,
-                      decoration: BoxDecoration(
-                          color: AppColor.kPrimaryColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(2),
-                              bottomLeft: Radius.circular(2))),
-                    )
-                  ],
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: List.generate(
+          list.length,
+          (index) => GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              if (index == 1)
+                Get.to(() => Browse());
+              else if (index == 2)
+                Get.to(() => BookDiary());
+              else if (index == 3)
+                Get.to(() => WeeklyReport());
+              else if (index == 4)
+                Get.to(() => MyPreferences());
+              else if (index == 5)
+                Get.to(() => MyProfile());
+              else if (index == 6) Get.offAll(() => Login());
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: [
+                  Spacer(),
+                  //index == 0 ? SizedBox() :
+                  list[index].widget,
+                  getHeightSizedBox(w: 10),
+
+                  Text(
+                    list[index].title,
+                    style: index == 0
+                        ? TextStyle(
+                            fontSize: getWidth(25),
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline)
+                        : TextStyle(fontSize: getWidth(16)),
+                  ),
+                  getHeightSizedBox(w: kDefaultPadding),
+                  index == 0
+                      ? SizedBox(
+                          width: 3,
+                        )
+                      : Container(
+                          width: 3,
+                          height: 17,
+                          decoration: BoxDecoration(
+                              color: AppColor.kPrimaryColor,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(2),
+                                  bottomLeft: Radius.circular(2))),
+                        )
+                ],
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -126,6 +122,7 @@ class MenuListModel {
 }
 
 List<MenuListModel> list = [
+  MenuListModel(title: 'Menu', widget: SizedBox()),
   MenuListModel(
       widget: buildSvgImage(image: AppIcons.search, height: 13, width: 13),
       title: 'Browse'),
