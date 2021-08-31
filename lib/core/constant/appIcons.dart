@@ -36,4 +36,5 @@ class AppIcons {
   static const String relational = 'assets/icons/home/Icon Friend.svg';
   static const String camera = 'assets/icons/home/Icon Camera.svg';
   static const String plus = 'assets/icons/menu/plus.svg';
+  static const String lock = 'assets/icons/menu/lock.svg';
 }

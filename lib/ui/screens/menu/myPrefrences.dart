@@ -269,9 +269,7 @@ class MyPreferences extends StatelessWidget {
                       ),
                     )
                   ],
-                )
-                // margin: EdgeInsets.symmetric(horizontal: 10),
-                ),
+                )),
           ),
         ),
         getHeightSizedBox(h: 8),

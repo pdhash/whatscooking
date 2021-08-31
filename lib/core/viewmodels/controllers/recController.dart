@@ -9,4 +9,13 @@ class RecController extends GetxController {
     _isSpin = value;
     update();
   }
+
+  bool _isAnimating = false;
+
+  bool get isAnimating => _isAnimating;
+
+  set isAnimating(bool value) {
+    _isAnimating = value;
+    update();
+  }
 }

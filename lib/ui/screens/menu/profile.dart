@@ -13,6 +13,7 @@ import 'package:whatscooking/ui/screens/menu/signatureDishes.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
+import 'achievements.dart';
 import 'browse.dart';
 
 class MyProfile extends StatelessWidget {
@@ -195,7 +196,11 @@ class MyProfile extends StatelessWidget {
       child: Row(
         children: List.generate(
           list.length,
-          (index) => Container(
+          (index) => GestureDetector(
+            onTap: () {
+              Get.to(()=>Achievements());
+            },
+            child: Container(
               margin: EdgeInsets.only(right: 20),
               width: 139,
               height: 163,
@@ -223,7 +228,9 @@ class MyProfile extends StatelessWidget {
                     ),
                   ),
                 ],
-              )),
+              ),
+            ),
+          ),
         ),
       ),
     );

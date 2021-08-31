@@ -143,6 +143,7 @@ class _AddPostState extends State<AddPost> {
   }
 
   GestureDetector dropDownButton(BuildContext context) {
+    List list = ['Family', 'Public'];
     return GestureDetector(
       onTap: () {
         showCupertinoModalPopup(
@@ -153,11 +154,8 @@ class _AddPostState extends State<AddPost> {
               backgroundColor: Colors.white,
               itemExtent: 30,
               scrollController: FixedExtentScrollController(initialItem: 1),
-              children: [
-                Text('0'),
-                Text('1'),
-                Text('2'),
-              ],
+              children:
+                  List.generate(list.length, (index) => Text(list[index])),
               onSelectedItemChanged: (value) {},
             ),
           ),
@@ -194,8 +192,9 @@ class _AddPostState extends State<AddPost> {
   }
 
   void openBottomSheet() {
-    Future.delayed(Duration(seconds: 0)).then((_) {
-      showModalBottomSheet(
+    Future.delayed(Duration(seconds: 0)).then(
+      (_) {
+        showModalBottomSheet(
           context: context,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -224,40 +223,40 @@ class _AddPostState extends State<AddPost> {
                     child: GridView.count(
                       shrinkWrap: false,
                       children: List.generate(
-                          9,
-                          (index) => GestureDetector(
-                                onTap: () {
-                                  Get.back();
-                                  if (index == 0)
-                                    appImagePicker.openBottomSheet(
-                                        context: context);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: index == 0
-                                          ? Color(0xff2D2D2D)
-                                          : Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: index == 0
-                                      ? Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(AppIcons.camera),
-                                              getHeightSizedBox(h: 10),
-                                              Text(
-                                                'Take Photo',
-                                                style: TextStyle(
-                                                    fontSize: getWidth(13),
-                                                    color: Color(0xff8A8A8F)),
-                                              )
-                                            ],
-                                          ),
+                        9,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            Get.back();
+                            if (index == 0)
+                              appImagePicker.openBottomSheet(context: context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: index == 0
+                                    ? Color(0xff2D2D2D)
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: index == 0
+                                ? Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(AppIcons.camera),
+                                        getHeightSizedBox(h: 10),
+                                        Text(
+                                          'Take Photo',
+                                          style: TextStyle(
+                                              fontSize: getWidth(13),
+                                              color: Color(0xff8A8A8F)),
                                         )
-                                      : null,
-                                ),
-                              )),
+                                      ],
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ),
+                      ),
                       crossAxisCount: 3,
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
@@ -266,8 +265,10 @@ class _AddPostState extends State<AddPost> {
                 ],
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 
   Widget header() {
