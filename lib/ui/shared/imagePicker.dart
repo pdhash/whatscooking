@@ -24,7 +24,7 @@ class AppImagePicker {
   browseImage(ImageSource source) async {
     try {
       var pickedFile =
-          await imagePicker.getImage(source: source, imageQuality: 50);
+          await imagePicker.pickImage(source: source, imageQuality: 50);
       if (pickedFile != null) {
         File? file = await ImageCropper.cropImage(
           sourcePath: pickedFile.path,
@@ -38,7 +38,7 @@ class AppImagePicker {
             toolbarTitle: "Image Cropper",
           ),
         );
-        imagePickerController.image = file!;
+        imagePickerController.image = file;
       }
     } on PlatformException {
       showMessage(source == ImageSource.gallery

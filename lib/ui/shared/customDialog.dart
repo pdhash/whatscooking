@@ -5,7 +5,7 @@ import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
-import 'package:whatscooking/ui/screens/menu/myPrefrences.dart';
+import 'package:whatscooking/ui/screens/profile/myPrefrences.dart';
 
 import 'customButton.dart';
 

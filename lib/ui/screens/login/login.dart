@@ -6,16 +6,15 @@ import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
-import 'package:whatscooking/ui/screens/baseScreen.dart';
+import 'package:whatscooking/core/viewmodels/controllers/loginController.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
+import '../baseScreen.dart';
+
 class Login extends StatelessWidget {
-  final TextEditingController mobileNumber = TextEditingController();
-  final TextEditingController otp = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Column(
@@ -49,23 +48,7 @@ class Login extends StatelessWidget {
                             fontSize: getWidth(20)),
                       ),
                       getHeightSizedBox(h: 30),
-                      CustomTextField(
-                        hintText: 'Enter Mobile Number',
-                        suffixText: 'Send OTP',
-                        controller: mobileNumber,
-                        maxLength: 10,
-                        textInputType: TextInputType.phone,
-                      ),
-                      getHeightSizedBox(h: 12),
-                      CustomTextField(
-                        hintText: 'Enter OTP',
-                        suffixText: 'Re Send OTP',
-                        onTap: () {
-                          Get.to(() => BaseScreen());
-                        },
-                        controller: otp,
-                        textInputType: TextInputType.phone,
-                      ),
+                      BuildFields(),
                       getHeightSizedBox(h: 23),
                       Text(
                         'OR',
@@ -132,6 +115,80 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BuildFields extends StatefulWidget {
+  @override
+  _BuildFieldsState createState() => _BuildFieldsState();
+}
+
+class _BuildFieldsState extends State<BuildFields>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      lowerBound: 0,
+      upperBound: 1,
+      vsync: this,
+    )..forward();
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+  }
+
+  final LoginController loginController = Get.put(LoginController());
+
+  final TextEditingController mobileNumber = TextEditingController();
+
+  final TextEditingController otp = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      builder: (LoginController controller) => Column(
+        children: [
+          CustomTextField(
+            hintText: 'Enter Mobile Number',
+            suffixText: 'Send OTP',
+            controller: mobileNumber,
+            maxLength: 10,
+            textInputType: TextInputType.phone,
+            onTap: () {
+              controller.otpFieldShow = true;
+            },
+          ),
+          controller.otpFieldShow
+              ? FadeTransition(
+                  opacity: _animation,
+                  child: Column(
+                    children: [
+                      getHeightSizedBox(h: 12),
+                      CustomTextField(
+                        hintText: 'Enter OTP',
+                        suffixText: 'Re Send OTP',
+                        onTap: () {
+                          Get.offAll(() => BaseScreen());
+                        },
+                        controller: otp,
+                        textInputType: TextInputType.phone,
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    print('dispose');
+    _controller.dispose();
+    super.dispose();
   }
 }
 

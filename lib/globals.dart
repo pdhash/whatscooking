@@ -12,3 +12,5 @@ List<Map<String, dynamic>> weeklyScreenList = [
   {'title': 'Protein', 'color': Color(0xffFF5042)},
   {'title': 'Carbs', 'color': Color(0xff00DAFD)},
 ];
+List browsList1 = ['Breakfast', 'Lunch', 'Dinner'];
+List browsList2 = ['10 min', '30 min', '1 hour'];
