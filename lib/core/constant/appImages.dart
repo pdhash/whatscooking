@@ -9,7 +9,8 @@ class AppImages {
   static const String background = 'assets/static/backgoundphto.png';
   static const String defaultUserPic =
       'assets/images/menu/ic_signup_image-upload@3x.png';
-  static const String menuBackground = 'assets/images/menu/backgoungmenu.png';
+  static const String menuBackground =
+      'assets/images/menu/indian-condiments-with-copy-space-view.png';
   static const String loginBackground1 =
       'assets/images/onBoarding/background@3x.png';
 }

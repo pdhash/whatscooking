@@ -3,10 +3,13 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:whatscooking/core/constant/appThemes.dart';
 import 'package:whatscooking/ui/screens/onBoarding/foodType.dart';
 
+import 'globals.dart';
+
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // SystemChrome.setSystemUIOverlayStyle(
   //     SystemUiOverlayStyle(statusBarColor: Colors.white));
+  initialiseGlobalVars();
   runApp(MyApp());
 }
 

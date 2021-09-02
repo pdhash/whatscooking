@@ -21,9 +21,9 @@ class _MealPlanState extends State<MealPlan> {
   final GlobalRangePicker globalRangePicker = GlobalRangePicker();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -107,9 +107,13 @@ class _MealPlanState extends State<MealPlan> {
         onTap: () {
           globalRangePicker.showChooseDialog();
         },
-        child: Text(
-          globalRangePicker.gRangePickerController.dateString,
-          style: TextStyle(fontSize: getWidth(16)),
+        child: Container(
+          color: Colors.transparent,
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text(
+            globalRangePicker.gRangePickerController.dateString,
+            style: TextStyle(fontSize: getWidth(16)),
+          ),
         ),
       ),
     );

@@ -9,8 +9,6 @@ import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/loginController.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
-import '../baseScreen.dart';
-
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -170,7 +168,7 @@ class _BuildFieldsState extends State<BuildFields>
                         hintText: 'Enter OTP',
                         suffixText: 'Re Send OTP',
                         onTap: () {
-                          Get.offAll(() => BaseScreen());
+                          Get.back();
                         },
                         controller: otp,
                         textInputType: TextInputType.phone,

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/utils/lang.dart';
-import 'package:whatscooking/ui/screens/login/login.dart';
+import 'package:whatscooking/ui/screens/baseScreen.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
@@ -30,7 +30,7 @@ class TimeOfDai extends StatelessWidget {
             CustomButton(
                 text: OnBoarding2Text.button1,
                 onTap: () {
-                  Get.to(() => Login());
+                  Get.to(() => BaseScreen());
                 }),
             getHeightSizedBox(h: 12),
             CustomButton(text: OnBoarding2Text.button2, onTap: () {}),

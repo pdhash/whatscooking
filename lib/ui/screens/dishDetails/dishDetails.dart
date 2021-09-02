@@ -8,6 +8,7 @@ import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 
+import '../../../globals.dart';
 import 'ingredients.dart';
 
 class DishDetails extends StatelessWidget {
@@ -96,28 +97,22 @@ class DishDetails extends StatelessWidget {
                             Spacer(
                               flex: 4,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => Ingredients());
-                              },
-                              child: Wrap(
-                                spacing: getWidth(30),
-                                children: [
-                                  Text(
-                                    'Ingredients',
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: List.generate(
+                                dishDetailList.length,
+                                (index) => GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => Ingredients(index: index));
+                                  },
+                                  child: Text(
+                                    dishDetailList[index],
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xffA6A6A6),
                                         fontSize: getWidth(26)),
                                   ),
-                                  Text(
-                                    'Recipe',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xffA6A6A6),
-                                        fontSize: getWidth(26)),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                             Spacer(

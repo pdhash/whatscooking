@@ -10,8 +10,8 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/bookDiaryController.dart';
+import 'package:whatscooking/ui/screens/Recommendations/recommendation.dart';
 import 'package:whatscooking/ui/screens/dishDetails/dishDetails.dart';
-import 'package:whatscooking/ui/screens/homee/recommendation.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
@@ -22,83 +22,61 @@ class BookDiary extends StatefulWidget {
   _BookDiaryState createState() => _BookDiaryState();
 }
 
-class _BookDiaryState extends State<BookDiary> {
+class _BookDiaryState extends State<BookDiary>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void initState() {
+    tabController = TabController(length: bookDiaryList.length, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   final BookDiaryController bookDiaryController =
       Get.put(BookDiaryController());
   List list = ['Cook Diary', 'Favorites'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(
-          appBarActionButtonType: AppBarActionButtonType.notification,
-          appBarLeadingButtonType: AppBarLeadingButtonType.back,
-          onLeadingButtonTap: () {
-            Get.back();
-          },
-        ),
-        body: Column(
-          children: [
-            getHeightSizedBox(h: 10),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kDefaultPadding + 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                    list.length,
-                    (index) => GetBuilder(
-                          builder: (BookDiaryController controller) =>
-                              bottomSheetButton(
-                                  title: list[index],
-                                  isSelected: index,
-                                  onTap: () {
-                                    controller.isSelected = index;
-                                  }),
-                        )),
-              ),
-            ),
-            getHeightSizedBox(h: 25),
-            // Expanded(child: CookDiary())
-            GetBuilder(
-                builder: (BookDiaryController controller) => Expanded(
-                    child: controller.isSelected == 0
-                        ? CookDiary()
-                        : Favourites()))
-          ],
-        ));
-  }
-
-  Widget bottomSheetButton(
-      {Function()? onTap, required String title, required int isSelected}) {
-    return GetBuilder(
-      builder: (BookDiaryController controller) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.only(bottom: 5),
-          decoration: BoxDecoration(
-              border: isSelected == controller.isSelected
-                  ? Border(
-                      bottom: BorderSide(
-                      color: Colors.white,
-                      width: 1.5,
-                    ))
-                  : Border()),
-          //width: 150,
-
-          child: Column(
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getWidth(25),
-                    color: isSelected == controller.isSelected
-                        ? Colors.white
-                        : Colors.white.withOpacity(0.35)),
-              ),
-            ],
+      appBar: appBar(
+        appBarActionButtonType: AppBarActionButtonType.notification,
+        appBarLeadingButtonType: AppBarLeadingButtonType.back,
+        onLeadingButtonTap: () {
+          Get.back();
+        },
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 40,
+            margin:
+                const EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),
+            child: TabBar(
+                controller: tabController,
+                indicatorColor: Colors.white,
+                labelPadding: EdgeInsets.zero,
+                unselectedLabelColor: Colors.white.withOpacity(0.22),
+                indicatorSize: TabBarIndicatorSize.label,
+                labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: getWidth(25)),
+                tabs: List.generate(
+                    bookDiaryList.length,
+                    (index) => Tab(
+                          text: bookDiaryList[index],
+                        ))),
           ),
-        ),
+          getHeightSizedBox(h: 20),
+          Expanded(
+            child: TabBarView(
+                controller: tabController,
+                children: [CookDiary(), Favourites()]),
+          )
+        ],
       ),
     );
   }

@@ -33,8 +33,8 @@ class _AddPostState extends State<AddPost> {
 
   final TextEditingController caption = TextEditingController();
   final AddPostController addPostController = Get.put(AddPostController());
-  final ImagePickerController imagePickerController =
-      Get.put(ImagePickerController());
+  // final ImagePickerController imagePickerController =
+  //     Get.find<ImagePickerController>();
 
   @override
   Widget build(BuildContext context) {

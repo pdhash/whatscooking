@@ -1,5 +1,5 @@
 enum AppBarLeadingButtonType {
-  drawer,
+  none,
   back,
 }
 

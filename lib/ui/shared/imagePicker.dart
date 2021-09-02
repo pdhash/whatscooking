@@ -19,6 +19,7 @@ class AppImagePicker {
   AppImagePicker({String? tag}) {
     this.tag = tag;
     _imagePickerController = Get.put(ImagePickerController(), tag: tag);
+    print("ImagePickerController.....");
   }
 
   browseImage(ImageSource source) async {

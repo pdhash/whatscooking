@@ -19,39 +19,36 @@ class _FilterScreenState extends State<FilterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: appBar(
-            appBarActionButtonType: AppBarActionButtonType.notification,
-            appBarLeadingButtonType: AppBarLeadingButtonType.back,
-            onLeadingButtonTap: () {
-              Get.back();
-            }),
-        body: Column(
-          children: [
-            getHeightSizedBox(h: 20),
-            FilterOption(),
-            getHeightSizedBox(h: 20),
-            Expanded(child: TabOptions()),
-            SafeArea(
-              child: GestureDetector(
-                onTap: (){
-                  Get.back();
-                },
-                child: Container(
-                  height: 40,
-                  child: Text(
-                    'Apply Filters',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.kPrimaryColor),
-                  ),
+    return Scaffold(
+      appBar: appBar(
+          appBarActionButtonType: AppBarActionButtonType.notification,
+          appBarLeadingButtonType: AppBarLeadingButtonType.back,
+          onLeadingButtonTap: () {
+            Get.back();
+          }),
+      body: Column(
+        children: [
+          getHeightSizedBox(h: 20),
+          FilterOption(),
+          getHeightSizedBox(h: 20),
+          Expanded(child: TabOptions()),
+          SafeArea(
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Container(
+                height: 40,
+                child: Text(
+                  'Apply Filters',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.kPrimaryColor),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -7,11 +7,17 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/dishDetailController.dart';
+import 'package:whatscooking/ui/screens/drawerMenu/shoppingList.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
+import '../../../globals.dart';
+
 class Ingredients extends StatefulWidget {
+  final int index;
+
+  const Ingredients({Key? key, required this.index}) : super(key: key);
   @override
   _IngredientsState createState() => _IngredientsState();
 }
@@ -59,7 +65,7 @@ class _IngredientsState extends State<Ingredients> {
                   decoration: BoxDecoration(
                     color: AppColor.kScaffoldColor,
                   ),
-                  child: OpenBottomSheet(),
+                  child: OpenBottomSheet(index: widget.index),
                 ),
               ),
             ),
@@ -71,16 +77,23 @@ class _IngredientsState extends State<Ingredients> {
 }
 
 class OpenBottomSheet extends StatefulWidget {
+  final int index;
+
+  const OpenBottomSheet({Key? key, required this.index}) : super(key: key);
   @override
   _OpenBottomSheetState createState() => _OpenBottomSheetState();
 }
 
-class _OpenBottomSheetState extends State<OpenBottomSheet> {
+class _OpenBottomSheetState extends State<OpenBottomSheet>
+    with SingleTickerProviderStateMixin {
   late ScrollController _scrollController;
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
+    tabController = TabController(
+        length: dishDetailList.length, vsync: this, initialIndex: widget.index);
     _scrollController = ScrollController()
       ..addListener(() {
         setState(() {});
@@ -94,6 +107,7 @@ class _OpenBottomSheetState extends State<OpenBottomSheet> {
 
   @override
   void dispose() {
+    tabController.dispose();
     _scrollController.dispose(); // dispose the controller
     super.dispose();
   }
@@ -101,107 +115,81 @@ class _OpenBottomSheetState extends State<OpenBottomSheet> {
   final DishDetailController dishDetailController =
       Get.find<DishDetailController>();
 
-  final List list = ['Ingredients', 'Recipe'];
-
   @override
   Widget build(BuildContext context) {
+    dishDetailController.isSelected = widget.index;
+
     return GetBuilder(
-      builder: (DishDetailController controller) => Column(
-        children: [
-          getHeightSizedBox(h: 30),
-          Container(
-            height: 5,
-            width: 75,
-            decoration: BoxDecoration(
-                color: Color(0xffFFFFFF),
-                borderRadius: BorderRadius.circular(50)),
-          ),
-          getHeightSizedBox(h: 25),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: kDefaultPadding + 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  list.length,
-                  (index) => bottomSheetButton(
-                      title: list[index],
-                      isSelected: index,
-                      onTap: () {
-                        controller.isSelected = index;
-                        _scrollToTop();
-                      })),
-            ),
-          ),
-          getHeightSizedBox(h: 20),
-          Expanded(
-              child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: controller.isSelected == 0 ? ingredients() : recipe()))
-        ],
-      ),
-    );
-  }
-
-  GestureDetector bottomSheetButton(
-      {Function()? onTap, required String title, required int isSelected}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-            border: isSelected == dishDetailController.isSelected
-                ? Border(
-                    bottom: BorderSide(
-                    color: Colors.white,
-                    width: 1.5,
-                  ))
-                : Border()),
-        //width: 150,
-
-        child: Column(
+      builder: (DishDetailController controller) {
+        return Column(
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: getWidth(25),
-                  color: isSelected == dishDetailController.isSelected
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.35)),
+            getHeightSizedBox(h: 30),
+            Container(
+              height: 5,
+              width: 75,
+              decoration: BoxDecoration(
+                  color: Color(0xffFFFFFF),
+                  borderRadius: BorderRadius.circular(50)),
             ),
+            getHeightSizedBox(h: 25),
+            Container(
+              height: 40,
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              child: TabBar(
+                controller: tabController,
+                indicatorColor: Colors.white,
+                labelStyle: TextStyle(
+                    fontSize: getWidth(25), fontWeight: FontWeight.bold),
+                labelPadding: EdgeInsets.zero,
+                unselectedLabelColor: Colors.white.withOpacity(0.22),
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: List.generate(
+                  dishDetailList.length,
+                  (index) => Tab(
+                    text: dishDetailList[index],
+                  ),
+                ),
+              ),
+            ),
+            getHeightSizedBox(h: 20),
+            Expanded(
+                child: TabBarView(
+                    controller: tabController,
+                    children: [ingredients(), recipe()]))
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget recipe() {
-    return Column(
-      children: [
-        Column(
-            children: List.generate(
-                3,
-                (index) => stepContainer(
-                    index: index,
-                    title:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et officia deserunt mollit anim id est laborum.',
-                    image: AppImages.background))),
-        Wrap(
-          children: [
-            Text(
-              'Enjoy',
-              style: TextStyle(fontSize: getWidth(20)),
-            ),
-            Text(
-              '  : )',
-              style: TextStyle(
-                  fontSize: getWidth(20), fontWeight: FontWeight.w900),
-            )
-          ],
-        ),
-        getHeightSizedBox(h: 40)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+              children: List.generate(
+                  3,
+                  (index) => stepContainer(
+                      index: index,
+                      title:
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et officia deserunt mollit anim id est laborum.',
+                      image: AppImages.background))),
+          Wrap(
+            children: [
+              Text(
+                'Enjoy',
+                style: TextStyle(fontSize: getWidth(20)),
+              ),
+              Text(
+                '  : )',
+                style: TextStyle(
+                    fontSize: getWidth(20), fontWeight: FontWeight.w900),
+              )
+            ],
+          ),
+          getHeightSizedBox(h: 40)
+        ],
+      ),
     );
   }
 
@@ -248,83 +236,92 @@ class _OpenBottomSheetState extends State<OpenBottomSheet> {
   }
 
   Widget ingredients() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding + 30),
-          child: Row(
-            children: [
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Icon(
-                    Icons.access_time,
-                    color: AppColor.kPrimaryColor,
-                  ),
-                  getHeightSizedBox(w: 3),
-                  Text(
-                    ' 30 min',
-                    style: TextStyle(
-                        color: AppColor.kPrimaryColor,
-                        fontSize: getWidth(16),
-                        fontWeight: FontWeight.w600),
-                  )
-                ],
-              ),
-              Spacer(),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    '3 portions',
-                    style: TextStyle(
-                        color: AppColor.kPrimaryColor,
-                        fontSize: getWidth(16),
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColor.kPrimaryColor,
-                  ),
-                ],
-              ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: kDefaultPadding + 30),
+            child: Row(
+              children: [
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      color: AppColor.kPrimaryColor,
+                    ),
+                    getHeightSizedBox(w: 3),
+                    Text(
+                      ' 30 min',
+                      style: TextStyle(
+                          color: AppColor.kPrimaryColor,
+                          fontSize: getWidth(16),
+                          fontWeight: FontWeight.w600),
+                    )
+                  ],
+                ),
+                Spacer(),
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      '3 portions',
+                      style: TextStyle(
+                          color: AppColor.kPrimaryColor,
+                          fontSize: getWidth(16),
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: AppColor.kPrimaryColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        getHeightSizedBox(h: 25),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(4, (index) => itemNut(index: index))),
-        getHeightSizedBox(h: 25),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),
-          child: Text(
-            'Things you might not have',
-            style:
-                TextStyle(fontWeight: FontWeight.w600, fontSize: getWidth(16)),
+          getHeightSizedBox(h: 25),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(4, (index) => itemNut(index: index))),
+          getHeightSizedBox(h: 25),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),
+            child: Text(
+              'Things you might not have',
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: getWidth(16)),
+            ),
           ),
-        ),
-        Column(
-          children: List.generate(4, (index) => checkBoxListTile()),
-        ),
-        getHeightSizedBox(h: 5),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),
-          child: Text(
-            'Things you might have',
-            style:
-                TextStyle(fontWeight: FontWeight.w600, fontSize: getWidth(16)),
+          Column(
+            children: List.generate(4, (index) => checkBoxListTile()),
           ),
-        ),
-        getHeightSizedBox(h: 5),
-        Column(
-          children: List.generate(4, (index) => checkBoxListTile()),
-        ),
-        getHeightSizedBox(h: 10),
-        CustomButton(text: '4 items       Add to shopping List', onTap: () {}),
-        getHeightSizedBox(h: 40),
-      ],
+          getHeightSizedBox(h: 5),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),
+            child: Text(
+              'Things you might have',
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: getWidth(16)),
+            ),
+          ),
+          getHeightSizedBox(h: 5),
+          Column(
+            children: List.generate(4, (index) => checkBoxListTile()),
+          ),
+          getHeightSizedBox(h: 10),
+          CustomButton(
+              text: '4 items       Add to shopping List',
+              onTap: () {
+                Get.to(() => ShoppingList());
+              }),
+          getHeightSizedBox(h: 40),
+        ],
+      ),
     );
   }
 

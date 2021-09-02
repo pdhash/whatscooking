@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/viewmodels/controllers/basescreenContoller.dart';
-import 'package:whatscooking/ui/shared/imagePicker.dart';
+import 'package:whatscooking/globals.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
 class BottomBar extends StatefulWidget {
   final BaseScreenController homeController = Get.put(BaseScreenController());
-  final ImagePickerController imagePickerController =
-      Get.find<ImagePickerController>();
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -62,7 +60,7 @@ class _BottomBarState extends State<BottomBar> {
                       list.length,
                       (index) => IconButton(
                             onPressed: () {
-                              widget.imagePickerController.reset();
+                              appImagePicker.imagePickerController.reset();
                               controller.selectedIndex = index;
                               print(controller.selectedIndex);
                             },
