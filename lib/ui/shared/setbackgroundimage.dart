@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/utils/config.dart';
@@ -15,26 +14,25 @@ class SetBackGround extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      fit: StackFit.expand,
       children: [
-        Container(
-          height: Get.height,
-          width: Get.width,
-          decoration: BoxDecoration(
-              image:
-                  DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
-          child: Column(
-            children: [
-              SafeArea(
-                child: AppLogo(),
-              ),
-              Spacer(),
-              child as Widget,
-            ],
-          ),
+        Image.asset(
+          AppImages.onBoardingBackGround,
+          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
         ),
-
-        //child as Widget,
+        Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: SafeArea(
+                  child:
+                      Align(alignment: Alignment.topCenter, child: SizedBox())),
+            ),
+            Expanded(flex: 1, child: child as Widget),
+          ],
+        )
       ],
     );
   }

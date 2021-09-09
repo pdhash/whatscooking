@@ -2,100 +2,97 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
-import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/menuController.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/bookdiary.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/browse.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/myPrefrences.dart';
 import 'package:whatscooking/ui/screens/drawerMenu/profile.dart';
 import 'package:whatscooking/ui/screens/drawerMenu/weeklyreport.dart';
-import 'package:whatscooking/ui/screens/login/login.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
+
+import 'bookdiary.dart';
+import 'browse.dart';
+import 'myPrefrences.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Spacer(),
-        Container(
-            width: Get.width,
-            height: getHeight(570),
-            padding: EdgeInsets.only(top: 30),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-              image: DecorationImage(
-                image: AssetImage(AppImages.menuBackground),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: DrawerMenuList())
-      ],
-    );
+    return Column();
   }
 }
 
+// class Menu extends StatelessWidget {
+//   const Menu({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         width: Get.width,
+//         height: Get.height,
+//         decoration: BoxDecoration(
+//           image: DecorationImage(
+//             image: AssetImage(AppImages.menuBackground),
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//         child: DrawerMenuList());
+//   }
+// }
+//
 class DrawerMenuList extends StatelessWidget {
   final MenuController menuController = Get.put(MenuController());
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: List.generate(
-          list.length,
-          (index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: GetBuilder(
-              builder: (MenuController controller) => GestureDetector(
-                onTap: () {
-                  controller.nowSelected = index;
-                  Get.back();
-                  if (index == 1)
-                    Get.to(() => Browse());
-                  else if (index == 2)
-                    Get.to(() => BookDiary());
-                  else if (index == 3)
-                    Get.to(() => WeeklyReport());
-                  else if (index == 4)
-                    Get.to(() => MyPreferences());
-                  else if (index == 5)
-                    Get.to(() => MyProfile());
-                  else if (index == 6) Get.offAll(() => Login());
-                },
-                child: FittedBox(
-                  child: Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    child: Row(
-                      children: [
-                        list[index].widget,
-                        index == 0 ? SizedBox() : getHeightSizedBox(w: 10),
-                        Text(
-                          list[index].title,
-                          style: index == 0
-                              ? TextStyle(
-                                  fontSize: getWidth(25),
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline)
-                              : TextStyle(
-                                  fontSize: getWidth(16),
-                                  fontWeight: FontWeight.w600,
-                                  color: index == controller.nowSelected
-                                      ? AppColor.kPrimaryColor
-                                      : null),
-                        ),
-                        getHeightSizedBox(w: kDefaultPadding),
-                        index == 0
-                            ? SizedBox(
-                                width: 3,
-                              )
-                            : Container(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List.generate(
+        list.length,
+        (index) => GetBuilder(
+          builder: (MenuController controller) => GestureDetector(
+            onTap: () {
+              if (index != 0) {
+                controller.isSelected = index;
+              }
+
+              if (index == 1)
+                Get.to(() => Browse());
+              else if (index == 2)
+                Get.to(() => BookDiary());
+              else if (index == 3)
+                Get.to(() => WeeklyReport());
+              else if (index == 4)
+                Get.to(() => MyPreferences());
+              else if (index == 5) Get.to(() => MyProfile());
+            },
+            child: FittedBox(
+              child: Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    list[index].widget,
+                    index == 0 ? SizedBox() : getHeightSizedBox(w: 10),
+                    Text(
+                      list[index].title,
+                      style: index == 0
+                          ? TextStyle(
+                              fontSize: getWidth(25),
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline)
+                          : TextStyle(
+                              fontSize: getWidth(16),
+                              fontWeight: FontWeight.w600,
+                            ),
+                    ),
+                    getHeightSizedBox(w: kDefaultPadding),
+                    index == 0
+                        ? SizedBox(
+                            width: 3,
+                          )
+                        : controller.isSelected == index
+                            ? Container(
                                 width: 3,
                                 height: 17,
                                 decoration: BoxDecoration(
@@ -105,10 +102,11 @@ class DrawerMenuList extends StatelessWidget {
                                     bottomRight: Radius.circular(2),
                                   ),
                                 ),
+                              )
+                            : SizedBox(
+                                width: 3,
                               ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),

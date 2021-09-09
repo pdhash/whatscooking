@@ -22,6 +22,7 @@ class FoodType extends StatelessWidget {
         child: Column(
           //  mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(),
             Center(
               child: Text(
                 OnBoarding1Text.onBoardingTitle,
@@ -38,19 +39,26 @@ class FoodType extends StatelessWidget {
                   Get.to(() => TimeOfDai());
                 }),
             getHeightSizedBox(h: 12),
-            CustomButton(text: OnBoarding1Text.button2, onTap: () {}),
+            CustomButton(
+                text: OnBoarding1Text.button2,
+                onTap: () {
+                  Get.to(() => TimeOfDai());
+                }),
             getHeightSizedBox(h: 12),
-            CustomButton(text: OnBoarding1Text.button3, onTap: () {}),
+            CustomButton(
+                text: OnBoarding1Text.button3,
+                onTap: () {
+                  Get.to(() => TimeOfDai());
+                }),
             getHeightSizedBox(h: 12),
-            CustomButton(text: OnBoarding1Text.button4, onTap: () {}),
-            getHeightSizedBox(h: 24),
+            Spacer(),
             SafeArea(
               child: Text(
                 OnBoarding1Text.bottomText,
                 style: TextStyle(fontSize: getWidth(12)),
               ),
             ),
-            getHeightSizedBox(h: 5),
+            getHeightSizedBox(h: 10),
           ],
         ),
       ),

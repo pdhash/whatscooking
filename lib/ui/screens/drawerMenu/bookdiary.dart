@@ -11,7 +11,8 @@ import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/bookDiaryController.dart';
 import 'package:whatscooking/ui/screens/Recommendations/recommendation.dart';
-import 'package:whatscooking/ui/screens/dishDetails/dishDetails.dart';
+import 'package:whatscooking/ui/screens/drawerMenu/cookDiaryAdd.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
@@ -49,6 +50,7 @@ class _BookDiaryState extends State<BookDiary>
         onLeadingButtonTap: () {
           Get.back();
         },
+        onActionButtonTap: () => Get.to(() => Notifications()),
       ),
       body: Column(
         children: [
@@ -224,7 +226,7 @@ class CookDiary extends StatelessWidget {
             3,
             (index) => recFoodBox(
                 onTap: () {
-                  Get.to(() => DishDetails());
+                  Get.to(() => AddDiary());
                 },
                 image: AppImages.recFoodBoxPhoto,
                 title: browsList1[index],

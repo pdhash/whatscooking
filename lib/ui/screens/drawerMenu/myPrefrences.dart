@@ -6,14 +6,18 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/browse.dart';
+import 'package:whatscooking/core/viewmodels/controllers/prefrencesController.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
+import 'package:whatscooking/ui/shared/customTextfield.dart';
 
 import 'familyMember.dart';
 
 class MyPreferences extends StatelessWidget {
   final TextEditingController search = TextEditingController();
+  final MyPreferencesController myPreferencesController =
+      Get.put(MyPreferencesController());
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,6 +28,7 @@ class MyPreferences extends StatelessWidget {
         appBar: appBar(
             appBarActionButtonType: AppBarActionButtonType.notification,
             appBarLeadingButtonType: AppBarLeadingButtonType.back,
+            onActionButtonTap: () => Get.to(() => Notifications()),
             onLeadingButtonTap: () => Get.back()),
         body: SingleChildScrollView(
           child: Padding(
@@ -417,28 +422,49 @@ class MyPreferences extends StatelessWidget {
     );
   }
 
-  CustomGrid grid3() {
-    return CustomGrid(
-      aspectRatio: 4,
-      crossAxisCount: 2,
-      child: List.generate(
-        6,
-        (index) => Container(
-            decoration: BoxDecoration(
-                color: Color(0xff4A4A4A),
-                borderRadius: BorderRadius.circular(8)),
-            child: Row(
-              children: [
-                getHeightSizedBox(w: 25),
-                Text(
-                  index == 5 ? 'more...' : 'Gujarati',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: getWidth(12)),
+  Widget grid3() {
+    return GetBuilder(
+      builder: (MyPreferencesController controller) => CustomGrid(
+        aspectRatio: 4,
+        crossAxisCount: 2,
+        child: List.generate(
+          6,
+          (index) => GestureDetector(
+            onTap: index == 5
+                ? null
+                : () {
+                    if (controller.healthList.contains(index))
+                      controller.removeH(index);
+                    else
+                      controller.addH(index);
+                  },
+            child: Container(
+                decoration: BoxDecoration(
+                    color: controller.healthList.contains(index)
+                        ? AppColor.kPrimaryColor.withOpacity(0.2)
+                        : Color(0xff4A4A4A),
+                    border: controller.healthList.contains(index)
+                        ? Border.all(color: AppColor.kPrimaryColor, width: 1)
+                        : Border(),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Row(
+                  children: [
+                    getHeightSizedBox(w: 25),
+                    Text(
+                      index == 5 ? 'more...' : 'Gujarati',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: getWidth(12),
+                          color: controller.healthList.contains(index)
+                              ? AppColor.kPrimaryColor
+                              : Colors.white),
+                    ),
+                  ],
+                )
+                // margin: EdgeInsets.symmetric(horizontal: 10),
                 ),
-              ],
-            )
-            // margin: EdgeInsets.symmetric(horizontal: 10),
-            ),
+          ),
+        ),
       ),
     );
   }
@@ -486,26 +512,44 @@ class MyPreferences extends StatelessWidget {
     );
   }
 
-  CustomGrid grid1() {
-    return CustomGrid(
-      aspectRatio: 2.8,
-      crossAxisCount: 3,
-      child: List.generate(
-        9,
-        (index) => GestureDetector(
-          onTap: () {},
-          child: Container(
-              decoration: BoxDecoration(
-                  color: Color(0xff4A4A4A),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Center(
-                  child: Text(
-                index == 8 ? 'more...' : 'Gujarati',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, fontSize: getWidth(12)),
-              ))
-              // margin: EdgeInsets.symmetric(horizontal: 10),
-              ),
+  Widget grid1() {
+    return GetBuilder(
+      builder: (MyPreferencesController controller) => CustomGrid(
+        aspectRatio: 2.8,
+        crossAxisCount: 3,
+        child: List.generate(
+          9,
+          (index) => GestureDetector(
+            onTap: index == 8
+                ? null
+                : () {
+                    if (controller.cuisinesList.contains(index))
+                      controller.remove(index);
+                    else
+                      controller.add(index);
+                  },
+            child: Container(
+                decoration: BoxDecoration(
+                    color: controller.cuisinesList.contains(index)
+                        ? AppColor.kPrimaryColor.withOpacity(0.2)
+                        : Color(0xff4A4A4A),
+                    borderRadius: BorderRadius.circular(8),
+                    border: controller.cuisinesList.contains(index)
+                        ? Border.all(color: AppColor.kPrimaryColor, width: 1)
+                        : Border()),
+                child: Center(
+                    child: Text(
+                  index == 8 ? 'more...' : 'Gujarati',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: getWidth(12),
+                      color: controller.cuisinesList.contains(index)
+                          ? AppColor.kPrimaryColor
+                          : Colors.white),
+                ))
+                // margin: EdgeInsets.symmetric(horizontal: 10),
+                ),
+          ),
         ),
       ),
     );

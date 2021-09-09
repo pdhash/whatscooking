@@ -4,12 +4,13 @@ import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/extension/appBarExtension.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
-PreferredSizeWidget appBar(
-    {required AppBarActionButtonType appBarActionButtonType,
-    required AppBarLeadingButtonType appBarLeadingButtonType,
-    Function()? onLeadingButtonTap,
-    Function()? onActionButtonTap,
-    Color color = Colors.white12}) {
+PreferredSizeWidget appBar({
+  required AppBarActionButtonType appBarActionButtonType,
+  required AppBarLeadingButtonType appBarLeadingButtonType,
+  Function()? onLeadingButtonTap,
+  Function()? onActionButtonTap,
+  Color color = Colors.transparent,
+}) {
   return PreferredSize(
     child: SafeArea(
       bottom: false,

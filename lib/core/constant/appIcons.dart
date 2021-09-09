@@ -37,4 +37,8 @@ class AppIcons {
   static const String camera = 'assets/icons/home/Icon Camera.svg';
   static const String plus = 'assets/icons/menu/plus.svg';
   static const String lock = 'assets/icons/menu/lock.svg';
+  static const String arrow = 'assets/icons/menu/Path 16750.svg';
+  static const String starCheck = 'assets/icons/dishdetails/startcheck.svg';
+  static const String starUncheck = 'assets/icons/dishdetails/starUncheck.svg';
+  static const String trophyDish = 'assets/icons/dishdetails/trophyDish.svg';
 }

@@ -19,6 +19,7 @@ class _SpinScreenState extends State<SpinScreen> {
   StreamController<int> streamController = StreamController<int>();
   @override
   void dispose() {
+    print('di');
     streamController.close();
     super.dispose();
   }
@@ -40,7 +41,7 @@ class _SpinScreenState extends State<SpinScreen> {
               ),
               getHeightSizedBox(h: 50),
 
-              //buildFortuneWheel(controller),
+              buildFortuneWheel(controller),
               getHeightSizedBox(h: 50),
 
               //Image(image: AssetImage('assets/images/onBoarding/temp.png')),
@@ -52,6 +53,7 @@ class _SpinScreenState extends State<SpinScreen> {
                         setState(() {
                           streamController.add(Random().nextInt(3));
                         });
+                        controller.isSpin = false;
                       },
               ),
               getHeightSizedBox(h: 50),

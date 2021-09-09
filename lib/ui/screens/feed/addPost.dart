@@ -13,8 +13,9 @@ import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/addpostController.dart';
 import 'package:whatscooking/globals.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/browse.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
+import 'package:whatscooking/ui/shared/customTextfield.dart';
 import 'package:whatscooking/ui/shared/imagePicker.dart';
 
 import 'feed.dart';
@@ -27,7 +28,7 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   @override
   void initState() {
-    openBottomSheet();
+    //openBottomSheet();
     super.initState();
   }
 
@@ -44,19 +45,13 @@ class _AddPostState extends State<AddPost> {
       },
       child: Scaffold(
         appBar: appBar(
-            appBarActionButtonType: AppBarActionButtonType.notification,
-            appBarLeadingButtonType: AppBarLeadingButtonType.back,
-            onLeadingButtonTap: () {
-              Get.back();
-            },
-            onActionButtonTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => Container(
-                  height: 300,
-                ),
-              );
-            }),
+          appBarActionButtonType: AppBarActionButtonType.notification,
+          appBarLeadingButtonType: AppBarLeadingButtonType.back,
+          onActionButtonTap: () => Get.to(() => Notifications()),
+          onLeadingButtonTap: () {
+            Get.back();
+          },
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -97,7 +92,7 @@ class _AddPostState extends State<AddPost> {
                                   controller: caption,
                                   textInputType: TextInputType.multiline,
                                   minLines: 1,
-                                  height: 60,
+                                  height: 50,
                                   maxLines: 3,
                                   hintText: 'Write something about your dish')
                             ],
@@ -121,10 +116,11 @@ class _AddPostState extends State<AddPost> {
     return GetBuilder(
       builder: (ImagePickerController controller) => GestureDetector(
         onTap: () {
-          openBottomSheet();
+          appImagePicker.openBottomSheet(context: context);
+          //openBottomSheet();
         },
         child: Container(
-            height: 200,
+            height: 300,
             width: Get.width,
             decoration: BoxDecoration(
                 border: controller.image != null
@@ -282,35 +278,36 @@ class _AddPostState extends State<AddPost> {
   }
 
   Widget header() {
-    return Row(
-      children: [
-        Spacer(
-          flex: 6,
-        ),
-        Text(
-          'Meal Plan ',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: getWidth(25)),
-        ),
-        Spacer(
-          flex: 2,
-        ),
-        TextButton(
-          onPressed: () {
-            Get.back();
-            //  appImagePicker.imagePickerController.reset();
-          },
-          child: Text(
-            'Post',
-            style: TextStyle(
-                color: AppColor.kPrimaryColor,
-                fontWeight: FontWeight.w600,
-                fontSize: getWidth(20)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      child: Row(
+        children: [
+          Spacer(
+            flex: 3,
           ),
-        ),
-        Spacer(
-          flex: 1,
-        ),
-      ],
+          Text(
+            'Add Post',
+            style:
+                TextStyle(fontWeight: FontWeight.bold, fontSize: getWidth(25)),
+          ),
+          Spacer(
+            flex: 2,
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.back();
+              //  appImagePicker.imagePickerController.reset();
+            },
+            child: Text(
+              'Post',
+              style: TextStyle(
+                  color: AppColor.kPrimaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: getWidth(20)),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

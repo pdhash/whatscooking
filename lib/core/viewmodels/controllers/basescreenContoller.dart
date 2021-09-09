@@ -9,4 +9,22 @@ class BaseScreenController extends GetxController {
     _selectedIndex = value;
     update();
   }
+
+  late int _lastSelected;
+
+  int get lastSelected => _lastSelected;
+
+  set lastSelected(int value) {
+    _lastSelected = value;
+    update();
+  }
+
+  bool _isDialogueShow = true;
+
+  bool get isDialogueShow => _isDialogueShow;
+
+  set isDialogueShow(bool value) {
+    _isDialogueShow = value;
+    update();
+  }
 }

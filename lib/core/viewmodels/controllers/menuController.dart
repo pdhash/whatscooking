@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
 class MenuController extends GetxController {
-  late int _nowSelected = 0;
+  int _isSelected = 0;
 
-  int get nowSelected => _nowSelected;
+  int get isSelected => _isSelected;
 
-  set nowSelected(int value) {
-    _nowSelected = value;
+  set isSelected(int value) {
+    _isSelected = value;
     update();
   }
 }

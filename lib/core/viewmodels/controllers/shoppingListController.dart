@@ -9,4 +9,13 @@ class ShoppingListController extends GetxController {
     _isEmpty = value;
     update();
   }
+
+  int _currentWeight = 1;
+
+  int get currentWeight => _currentWeight;
+
+  set currentWeight(int value) {
+    _currentWeight = value;
+    update();
+  }
 }

@@ -5,6 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 
 import '../../../globals.dart';
@@ -16,6 +17,7 @@ class WeeklyReport extends StatelessWidget {
       appBar: appBar(
           appBarActionButtonType: AppBarActionButtonType.notification,
           appBarLeadingButtonType: AppBarLeadingButtonType.back,
+          onActionButtonTap: () => Get.to(() => Notifications()),
           onLeadingButtonTap: () => Get.back()),
       body: SingleChildScrollView(
         child: Column(

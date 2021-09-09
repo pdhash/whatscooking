@@ -7,151 +7,160 @@ import 'package:whatscooking/core/constant/appColors.dart';
 import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
+import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/appFunctions.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/ui/screens/drawerMenu/signatureDishes.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
+import 'package:whatscooking/ui/shared/customAppBar.dart';
+import 'package:whatscooking/ui/shared/customTextfield.dart';
 import 'package:whatscooking/ui/shared/imagePicker.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
 import '../../../globals.dart';
 import '../drawerMenu/achievements.dart';
-import '../drawerMenu/browse.dart';
 import '../drawerMenu/myPrefrences.dart';
 
 class MyProfile extends StatelessWidget {
   final TextEditingController name = TextEditingController();
   final TextEditingController mobileNumber = TextEditingController();
-  // final ImagePickerController imagePickerController =
-  //     Get.find<ImagePickerController>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         disposeKeyboard();
       },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 45,
-              ),
-              profile(context),
-              getHeightSizedBox(h: 20),
-              Text(
-                'Personal Info',
-                style: TextStyle(
-                  fontSize: getWidth(20),
+      child: Scaffold(
+        appBar: appBar(
+            appBarActionButtonType: AppBarActionButtonType.notification,
+            appBarLeadingButtonType: AppBarLeadingButtonType.back,
+            onActionButtonTap: () => Get.to(() => Notifications()),
+            onLeadingButtonTap: () => Get.back()),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 45,
                 ),
-              ),
-              CustomTextField2(
-                controller: name,
-                hintText: 'Name',
-                giveSpace: false,
-                textInputType: TextInputType.text,
-                prefixWidget:
-                    buildSvgImage(image: AppIcons.user, height: 20, width: 20),
-                suffix: GestureDetector(
-                  onTap: () {
-                    disposeKeyboard();
-                  },
-                  child: Text(
-                    'Save',
-                    style: TextStyle(
-                        fontSize: getWidth(15),
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.kPrimaryColor),
+                profile(context),
+                getHeightSizedBox(h: 20),
+                Text(
+                  'Personal Info',
+                  style: TextStyle(
+                    fontSize: getWidth(20),
                   ),
                 ),
-              ),
-              getHeightSizedBox(h: 10),
-              CustomTextField2(
-                controller: mobileNumber,
-                hintText: 'Mobile Number',
-                length: 10,
-                giveSpace: false,
-                textInputType: TextInputType.phone,
-                prefixWidget:
-                    buildSvgImage(image: AppIcons.call, height: 20, width: 20),
-                suffix: GestureDetector(
-                  onTap: () {
-                    disposeKeyboard();
-                  },
-                  child: Text(
-                    'Save',
-                    style: TextStyle(
-                        fontSize: getWidth(15),
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.kPrimaryColor),
-                  ),
-                ),
-              ),
-              getHeightSizedBox(h: 23),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Get.to(MyPreferences());
-                  },
-                  child: Text(
-                    'Go to Preferences',
-                    style: TextStyle(
-                        fontSize: getWidth(20), color: AppColor.kPrimaryColor),
-                  ),
-                ),
-              ),
-              getHeightSizedBox(h: 23),
-              Text(
-                'Your Score',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, fontSize: getWidth(20)),
-              ),
-              getHeightSizedBox(h: 20),
-              scoreHeader(),
-              getHeightSizedBox(h: 23),
-              header('Latest Dishes'),
-              getHeightSizedBox(h: 23),
-              latestDishRow(),
-              getHeightSizedBox(h: 35),
-              Row(
-                children: [
-                  header('Signature Dishes'),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () => Get.to(() => SignatureDishes()),
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Icon(Icons.add,
-                            size: 18, color: AppColor.kPrimaryColor),
-                        Text(
-                          ' Add a Dish',
-                          style: TextStyle(
-                              fontSize: getWidth(15),
-                              color: AppColor.kPrimaryColor),
-                        ),
-                      ],
+                CustomTextField2(
+                  controller: name,
+                  hintText: 'Name',
+                  giveSpace: false,
+                  textInputType: TextInputType.text,
+                  prefixWidget: buildSvgImage(
+                      image: AppIcons.user, height: 20, width: 20),
+                  suffix: GestureDetector(
+                    onTap: () {
+                      disposeKeyboard();
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                          fontSize: getWidth(15),
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.kPrimaryColor),
                     ),
-                  )
-                ],
-              ),
-              getHeightSizedBox(h: 23),
-              signatureDishRow(),
-              getHeightSizedBox(h: 35),
-              header('Achievements'),
-              getHeightSizedBox(h: 23),
-              achievements(),
-              getHeightSizedBox(h: 35),
-              Text(
-                'Top 5 Cuisines',
-                style: TextStyle(
-                    fontSize: getWidth(20), fontWeight: FontWeight.w600),
-              ),
-              getHeightSizedBox(h: 15),
-              barBuilder(),
-              getHeightSizedBox(h: 45),
-            ],
+                  ),
+                ),
+                getHeightSizedBox(h: 10),
+                CustomTextField2(
+                  controller: mobileNumber,
+                  hintText: 'Mobile Number',
+                  length: 10,
+                  giveSpace: false,
+                  textInputType: TextInputType.phone,
+                  prefixWidget: buildSvgImage(
+                      image: AppIcons.call, height: 20, width: 20),
+                  suffix: GestureDetector(
+                    onTap: () {
+                      disposeKeyboard();
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                          fontSize: getWidth(15),
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.kPrimaryColor),
+                    ),
+                  ),
+                ),
+                getHeightSizedBox(h: 23),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(MyPreferences());
+                    },
+                    child: Text(
+                      'Go to Preferences',
+                      style: TextStyle(
+                          fontSize: getWidth(20),
+                          color: AppColor.kPrimaryColor),
+                    ),
+                  ),
+                ),
+                getHeightSizedBox(h: 23),
+                Text(
+                  'Your Score',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: getWidth(20)),
+                ),
+                getHeightSizedBox(h: 20),
+                scoreHeader(),
+                getHeightSizedBox(h: 23),
+                header('Latest Dishes'),
+                getHeightSizedBox(h: 23),
+                latestDishRow(),
+                getHeightSizedBox(h: 35),
+                Row(
+                  children: [
+                    header('Signature Dishes'),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => Get.to(() => SignatureDishes()),
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Icon(Icons.add,
+                              size: 18, color: AppColor.kPrimaryColor),
+                          Text(
+                            ' Add a Dish',
+                            style: TextStyle(
+                                fontSize: getWidth(15),
+                                color: AppColor.kPrimaryColor),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                getHeightSizedBox(h: 23),
+                signatureDishRow(),
+                getHeightSizedBox(h: 35),
+                header('Achievements'),
+                getHeightSizedBox(h: 23),
+                achievements(),
+                getHeightSizedBox(h: 35),
+                Text(
+                  'Top 5 Cuisines',
+                  style: TextStyle(
+                      fontSize: getWidth(20), fontWeight: FontWeight.w600),
+                ),
+                getHeightSizedBox(h: 15),
+                barBuilder(),
+                getHeightSizedBox(h: 45),
+              ],
+            ),
           ),
         ),
       ),

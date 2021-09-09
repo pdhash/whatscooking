@@ -66,7 +66,7 @@ class _TabOptionsState extends State<TabOptions>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: 4);
+    _tabController = new TabController(vsync: this, length: filterType.length);
   }
 
   @override
@@ -75,7 +75,23 @@ class _TabOptionsState extends State<TabOptions>
     super.dispose();
   }
 
-  List list = ['Meal', 'Cuisines', 'Type', 'Prep time'];
+  List<Map<String, dynamic>> filterType = [
+    {
+      'Meal': ['Breakfast', 'Lunch', 'Dinner']
+    },
+    {
+      'Cuisines': ['Ethnicity']
+    },
+    {
+      'Type': ['veg', 'non veg', 'jain', 'fasting']
+    },
+    {
+      'Prep time': ['10min', '30 min', '1 hr', "1+hr"]
+    },
+    {
+      'Ingredients available': ['Easy to find', 'im going shopping']
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -91,18 +107,17 @@ class _TabOptionsState extends State<TabOptions>
               unselectedLabelColor: Colors.white.withOpacity(0.22),
               indicator: UnderlineTabIndicator(
                   insets: EdgeInsets.only(left: 15, right: 19)),
-              tabs: [
-                for (var tabs in list)
-                  Tab(
-                    child: Text(
-                      tabs,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: getWidth(20),
-                      ),
-                    ),
-                  )
-              ],
+              tabs: List.generate(
+                  filterType.length,
+                  (index) => Tab(
+                        child: Text(
+                          filterType[index].keys.single,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: getWidth(20),
+                          ),
+                        ),
+                      )),
             ),
           ),
         ),
@@ -113,27 +128,17 @@ class _TabOptionsState extends State<TabOptions>
   }
 
   Widget buildTabBarView() {
-    List list = [
-      'Any',
-      'Gujarati',
-      'Rajasthani',
-      'Punjabi',
-      'Continental',
-      'Maharashtrian',
-      'Italian',
-      'Mexican'
-    ];
     return TabBarView(
       controller: _tabController,
       children: List.generate(
-        4,
+        filterType.length,
         (index) => ListView(
           padding: EdgeInsets.only(left: 12),
           children: List.generate(
-            list.length,
-            (index) => ListTile(
+            filterType[index][filterType[index].keys.single].length,
+            (i) => ListTile(
               title: Text(
-                list[index],
+                filterType[index][filterType[index].keys.single][i],
                 style: TextStyle(fontSize: getWidth(20), color: Colors.white),
               ),
               trailing: IconButton(

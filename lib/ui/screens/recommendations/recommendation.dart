@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -10,9 +12,11 @@ import 'package:whatscooking/core/viewmodels/controllers/basescreenContoller.dar
 import 'package:whatscooking/core/viewmodels/controllers/recController.dart';
 import 'package:whatscooking/ui/screens/dishDetails/dishDetails.dart';
 import 'package:whatscooking/ui/screens/login/login.dart';
-import 'package:whatscooking/ui/shared/customButton.dart';
+import 'package:whatscooking/ui/screens/recommendations/spinscreen.dart';
+import 'package:whatscooking/ui/shared/customDialog.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
 
+import '../../../globals.dart';
 import 'filterScreen.dart';
 
 class Recommendations extends StatefulWidget {
@@ -21,6 +25,32 @@ class Recommendations extends StatefulWidget {
 }
 
 class _HomeState extends State<Recommendations> {
+  late Timer timer;
+
+  @override
+  void initState() {
+    timer = Timer(Duration(seconds: 3), () {
+      if (baseScreenController.selectedIndex == 2) {
+        print('timer off');
+        showCustomDialog(
+            context: context, dialogueType: DialogueType.preferenceFillUp)
+          ..whenComplete(() {
+            timer.cancel();
+          });
+      } else {
+        timer.cancel();
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   final BaseScreenController baseScreenController =
       Get.find<BaseScreenController>();
 
@@ -28,47 +58,56 @@ class _HomeState extends State<Recommendations> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: [
-            getHeightSizedBox(h: 10),
-            filterHeader(),
-            getHeightSizedBox(h: 9),
-            Column(
-              children: List.generate(
-                  3,
-                  (index) => recFoodBox(
+    return GetBuilder(
+      builder: (RecController controller) => controller.isSpin
+          ? SpinScreen()
+          : SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    getHeightSizedBox(h: 10),
+                    filterHeader(),
+                    getHeightSizedBox(h: 9),
+                    Column(
+                      children: List.generate(
+                          3,
+                          (index) => recFoodBox(
+                              onTap: () {
+                                timer.cancel();
+                                Get.to(() => BookingEventDetailScreen());
+                                //   Get.to(() => DishDetails());
+                              },
+                              image: recImageList[index],
+                              title: recTextList[index])),
+                    ),
+                    getHeightSizedBox(h: 9),
+                    GestureDetector(
                       onTap: () {
-                        Get.to(() => DishDetails());
+                        timer.cancel();
+
+                        recController.isSpin = true;
                       },
-                      image: AppImages.recFoodBoxPhoto,
-                      title: 'Butter Paneer')),
-            ),
-            getHeightSizedBox(h: 9),
-            GestureDetector(
-              onTap: () {
-                recController.isSpin = true;
-              },
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 5,
-                children: [
-                  buildSvgImage(image: AppIcons.wheel, height: 40, width: 40),
-                  Text(
-                    'Help me choose',
-                    style: TextStyle(
-                        color: AppColor.kPrimaryColor,
-                        fontSize: getWidth(15),
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 5,
+                        children: [
+                          buildSvgImage(
+                              image: AppIcons.wheel, height: 40, width: 40),
+                          Text(
+                            'Help me choose',
+                            style: TextStyle(
+                                color: AppColor.kPrimaryColor,
+                                fontSize: getWidth(15),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    getHeightSizedBox(h: 25)
+                  ],
+                ),
               ),
             ),
-            getHeightSizedBox(h: 25)
-          ],
-        ),
-      ),
     );
   }
 
@@ -76,23 +115,43 @@ class _HomeState extends State<Recommendations> {
     return Row(
       children: [
         Spacer(
-          flex: 6,
+          flex: 4,
         ),
-        CustomButton(
-          text: 'Aaj Kya Banaye?',
+        GestureDetector(
           onTap: () {
+            timer.cancel();
+
             Get.to(() => Login());
           },
-          radius: 50,
-          height: 35,
-          width: 160,
-          fontSize: 14,
+          child: Container(
+            height: 50,
+            width: 170,
+            padding: EdgeInsets.all(4.5),
+            decoration: BoxDecoration(
+                border: Border.all(color: Color(0xff707070), width: 0.62),
+                borderRadius: BorderRadius.circular(18.39)),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                SvgPicture.asset(AppImages.boxStamp),
+                Center(
+                  child: Text(
+                    'Aaj Kya Banaye?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: getWidth(15)),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
         Spacer(
           flex: 2,
         ),
         GestureDetector(
           onTap: () {
+            timer.cancel();
+
             Get.to(() => FilterScreen());
           },
           child: Container(

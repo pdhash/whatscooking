@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:whatscooking/core/constant/appImages.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/utils/lang.dart';
-import 'package:whatscooking/ui/screens/baseScreen.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
+
+import '../baseScreen.dart';
 
 class TimeOfDai extends StatelessWidget {
   @override
@@ -17,6 +18,7 @@ class TimeOfDai extends StatelessWidget {
         child: Column(
           //  mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(),
             Center(
               child: Text(
                 OnBoarding2Text.onBoardingTitle,
@@ -30,13 +32,29 @@ class TimeOfDai extends StatelessWidget {
             CustomButton(
                 text: OnBoarding2Text.button1,
                 onTap: () {
-                  Get.to(() => BaseScreen());
+                  Get.offAll(() => BaseScreen());
                 }),
             getHeightSizedBox(h: 12),
-            CustomButton(text: OnBoarding2Text.button2, onTap: () {}),
+            CustomButton(
+                text: OnBoarding2Text.button2,
+                onTap: () {
+                  Get.offAll(() => BaseScreen());
+                }),
             getHeightSizedBox(h: 12),
-            CustomButton(text: OnBoarding2Text.button3, onTap: () {}),
-            SafeArea(child: getHeightSizedBox(h: 100))
+            CustomButton(
+                text: OnBoarding2Text.button3,
+                onTap: () {
+                  Get.offAll(() => BaseScreen());
+                }),
+            getHeightSizedBox(h: 12),
+            Spacer(),
+            SafeArea(
+              child: Text(
+                '',
+                style: TextStyle(fontSize: getWidth(12)),
+              ),
+            ),
+            getHeightSizedBox(h: 10),
           ],
         ),
       ),

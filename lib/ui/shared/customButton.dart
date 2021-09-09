@@ -18,7 +18,7 @@ class CustomButton extends StatefulWidget {
     required this.text,
     required this.onTap,
     this.width = 0,
-    this.padding = 30,
+    this.padding = 50,
     this.radius = 15,
     this.height = 50,
     this.fontSize = 16,
@@ -39,7 +39,7 @@ class _CustomButtonState extends State<CustomButton> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: widget.padding),
         width: widget.width == 0 ? double.infinity : getWidth(widget.width),
-        height: getWidth(widget.height),
+        height: widget.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(widget.radius as double),

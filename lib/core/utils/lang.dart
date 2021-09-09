@@ -4,8 +4,7 @@ class OnBoarding1Text {
       'What is your general food preference?*';
   static const String button1 = 'Vegetarian';
   static const String button2 = 'Non Vegetarian too';
-  static const String button3 = 'Eggetarian';
-  static const String button4 = 'Jain';
+  static const String button3 = 'Jain';
   static const String bottomText =
       '*You can tell us detailed preferences later';
 }

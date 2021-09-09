@@ -64,6 +64,7 @@ class Login extends StatelessWidget {
                               width: 155,
                               onTap: () {
                                 disposeKeyboard();
+                                Get.back();
                               }),
                           Spacer(),
                           buildImage(
@@ -72,6 +73,7 @@ class Login extends StatelessWidget {
                               width: 155,
                               onTap: () {
                                 disposeKeyboard();
+                                Get.back();
                               }),
                         ],
                       ),
@@ -79,6 +81,7 @@ class Login extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           disposeKeyboard();
+                          Get.back();
                         },
                         child: Container(
                           height: 50,

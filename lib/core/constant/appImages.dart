@@ -1,9 +1,11 @@
 class AppImages {
   //OnBoarding
   static const String onBoardingBackGround =
-      'assets/images/onBoarding/backgroundonBoard@3x.png';
+      'assets/images/onBoarding/mainBackground@3x.png';
   static const String onBoardingLogo = 'assets/images/onBoarding/logoo.png';
   static const String recFoodBoxPhoto = 'assets/static/fewfasf.png';
+  static const String boxStamp =
+      'assets/images/onBoarding/ajjKyabanyeStamp.svg';
 
   ///statics
   static const String background = 'assets/static/backgoundphto.png';
@@ -12,5 +14,7 @@ class AppImages {
   static const String menuBackground =
       'assets/images/menu/indian-condiments-with-copy-space-view.png';
   static const String loginBackground1 =
-      'assets/images/onBoarding/background@3x.png';
+      'assets/images/onBoarding/loginBackground@3x.png';
+
+  ///for temporary------------------------------
 }

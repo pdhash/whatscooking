@@ -18,7 +18,7 @@ Future showCustomDialog(
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
-    barrierColor: Colors.white24,
+    barrierColor: Colors.white30,
     builder: (BuildContext context) {
       return Dialog(
         insetPadding: EdgeInsets.symmetric(horizontal: kDefaultPadding + 10),

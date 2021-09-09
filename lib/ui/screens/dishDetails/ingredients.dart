@@ -7,7 +7,7 @@ import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
 import 'package:whatscooking/core/viewmodels/controllers/dishDetailController.dart';
-import 'package:whatscooking/ui/screens/drawerMenu/shoppingList.dart';
+import 'package:whatscooking/ui/screens/shoppingList/shoppingList.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customButton.dart';
 import 'package:whatscooking/ui/shared/setbackgroundimage.dart';
@@ -86,34 +86,22 @@ class OpenBottomSheet extends StatefulWidget {
 
 class _OpenBottomSheetState extends State<OpenBottomSheet>
     with SingleTickerProviderStateMixin {
-  late ScrollController _scrollController;
   late TabController tabController;
+  final DishDetailController dishDetailController =
+      Get.find<DishDetailController>();
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(
         length: dishDetailList.length, vsync: this, initialIndex: widget.index);
-    _scrollController = ScrollController()
-      ..addListener(() {
-        setState(() {});
-      });
-  }
-
-  void _scrollToTop() {
-    _scrollController.animateTo(0,
-        duration: Duration(microseconds: 1), curve: Curves.linear);
   }
 
   @override
   void dispose() {
     tabController.dispose();
-    _scrollController.dispose(); // dispose the controller
     super.dispose();
   }
-
-  final DishDetailController dishDetailController =
-      Get.find<DishDetailController>();
 
   @override
   Widget build(BuildContext context) {

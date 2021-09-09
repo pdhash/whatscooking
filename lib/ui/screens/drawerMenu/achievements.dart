@@ -6,6 +6,7 @@ import 'package:whatscooking/core/constant/appIcons.dart';
 import 'package:whatscooking/core/constant/appSettings.dart';
 import 'package:whatscooking/core/enums.dart';
 import 'package:whatscooking/core/utils/config.dart';
+import 'package:whatscooking/ui/screens/notification/notificationScreen.dart';
 import 'package:whatscooking/ui/shared/customAppBar.dart';
 import 'package:whatscooking/ui/shared/customDialog.dart';
 
@@ -16,6 +17,7 @@ class Achievements extends StatelessWidget {
       appBar: appBar(
           appBarActionButtonType: AppBarActionButtonType.notification,
           appBarLeadingButtonType: AppBarLeadingButtonType.back,
+          onActionButtonTap: () => Get.to(() => Notifications()),
           onLeadingButtonTap: () {
             Get.back();
           }),
